@@ -147,6 +147,9 @@ wire        fft_input_tready;
 assign fft_output_re = fft_output_tdata[15:0];
 assign fft_output_im = fft_output_tdata[31:16];
 
+// CRITICAL: Drive ready signals high (from tutorial - must always be ready)
+assign fft_output_ready = 1'b1;
+
 // Always ready to accept FFT output
 assign fft_output_ready = 1'b1;
 
@@ -180,6 +183,9 @@ wire        ifft_input_tready;
 
 assign ifft_output_re = ifft_output_tdata[15:0];
 assign ifft_output_im = ifft_output_tdata[31:16];
+
+// CRITICAL: Drive ready signals high (from tutorial - must always be ready)
+assign ifft_output_ready = 1'b1;
 
 // IFFT IP instantiation - ACTIVE
 xfft_1 inverse_fft (
@@ -282,7 +288,7 @@ always @(posedge clk) begin
             // ================================================================
             // COLLECT_FFT: Collect FFT output and calculate magnitude
             // FFT IP outputs in natural order (no bit-reversal needed!)
-            // Takes 256 cycles
+            // IMPORTANT: Only collect when fft_output_valid is high!
             // ================================================================
             COLLECT_FFT: begin
                 if (fft_output_valid) begin
@@ -304,6 +310,8 @@ always @(posedge clk) begin
                         counter <= counter + 1;
                     end
                 end
+                // State machine waits here until fft_output_valid goes high
+                // This accounts for FFT pipeline latency (from tutorial)
             end
 
             // ================================================================
@@ -354,7 +362,7 @@ always @(posedge clk) begin
 
             // ================================================================
             // COLLECT_IFFT: Collect IFFT output (time-domain waveform)
-            // Takes 256 cycles
+            // IMPORTANT: Only collect when ifft_output_valid is high!
             // ================================================================
             COLLECT_IFFT: begin
                 if (ifft_output_valid) begin
@@ -369,6 +377,8 @@ always @(posedge clk) begin
                         counter <= counter + 1;
                     end
                 end
+                // State machine waits here until ifft_output_valid goes high
+                // This accounts for IFFT pipeline latency (from tutorial)
             end
 
             // ================================================================
