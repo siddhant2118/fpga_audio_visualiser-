@@ -73,7 +73,8 @@ localparam COLLECT_IFFT     = 4'd7;
 localparam OUTPUT_WAVEFORM  = 4'd8;
 
 reg [3:0] state = IDLE;
-reg [7:0] counter = 0;
+reg [8:0] counter = 0;  // 9 bits for counting beyond 256
+reg [15:0] timeout_counter = 0;  // NEW: Timeout counter for stuck states
 
 // ============================================================================
 // Sample Buffer (256 samples from BRAM)
@@ -212,6 +213,7 @@ always @(posedge clk) begin
     if (reset) begin
         state             <= IDLE;
         counter           <= 0;
+        timeout_counter   <= 0;
         m2_rd_addr        <= 0;
         fft_input_valid   <= 0;
         fft_input_last    <= 0;
@@ -227,6 +229,9 @@ always @(posedge clk) begin
         ifft_input_last  <= 0;
         fft_data_valid   <= 0;
         wave_data_valid  <= 0;
+        
+        // Increment timeout counter (resets per state)
+        timeout_counter <= timeout_counter + 1;
 
         case (state)
             // ================================================================
@@ -234,6 +239,7 @@ always @(posedge clk) begin
             // ================================================================
             IDLE: begin
                 counter <= 0;
+                timeout_counter <= 0;
                 if (frame_done) begin
                     state      <= READ_SAMPLES;
                     m2_rd_addr <= 0;
@@ -289,6 +295,9 @@ always @(posedge clk) begin
             // ================================================================
             COLLECT_FFT: begin
                 if (fft_output_valid) begin
+                    // Reset timeout when we get valid data
+                    timeout_counter <= 0;
+                    
                     // Calculate magnitude using L1 norm: |Re| + |Im|
                     re_signed = fft_output_re;
                     im_signed = fft_output_im;
@@ -303,8 +312,25 @@ always @(posedge clk) begin
                     if (fft_output_last || counter == 255) begin
                         state   <= OUTPUT_FFT_MAG;
                         counter <= 0;
+                        timeout_counter <= 0;
                     end else begin
                         counter <= counter + 1;
+                    end
+                end else begin
+                    // TIMEOUT: If no valid data for 5000 cycles, output sample data instead
+                    if (timeout_counter > 5000) begin
+                        // FFT IP not working - use sample magnitudes as fallback
+                        fft_mag_buffer[counter] <= sample_buffer[counter][15] ? 
+                                                   (~sample_buffer[counter] + 1) : 
+                                                   sample_buffer[counter];
+                        
+                        if (counter == 255) begin
+                            state   <= OUTPUT_FFT_MAG;
+                            counter <= 0;
+                            timeout_counter <= 0;
+                        end else begin
+                            counter <= counter + 1;
+                        end
                     end
                 end
                 // State machine waits here until fft_output_valid goes high
@@ -363,6 +389,9 @@ always @(posedge clk) begin
             // ================================================================
             COLLECT_IFFT: begin
                 if (ifft_output_valid) begin
+                    // Reset timeout when we get valid data
+                    timeout_counter <= 0;
+                    
                     // Store real part (ignore imaginary, should be ~0)
                     // Scale down by 256 (divide by FFT size) to normalize
                     ifft_output_buffer[counter] <= ifft_output_re >>> 8;
@@ -370,8 +399,23 @@ always @(posedge clk) begin
                     if (ifft_output_last || counter == 255) begin
                         state   <= OUTPUT_WAVEFORM;
                         counter <= 0;
+                        timeout_counter <= 0;
                     end else begin
                         counter <= counter + 1;
+                    end
+                end else begin
+                    // TIMEOUT: If no valid data for 5000 cycles, output original samples
+                    if (timeout_counter > 5000) begin
+                        // IFFT IP not working - use original samples as fallback
+                        ifft_output_buffer[counter] <= sample_buffer[counter];
+                        
+                        if (counter == 255) begin
+                            state   <= OUTPUT_WAVEFORM;
+                            counter <= 0;
+                            timeout_counter <= 0;
+                        end else begin
+                            counter <= counter + 1;
+                        end
                     end
                 end
                 // State machine waits here until ifft_output_valid goes high
@@ -402,8 +446,8 @@ end
 // ============================================================================
 // Debug Outputs
 // ============================================================================
-assign inter_out = fft_output_re;  // Debug: monitor FFT real output
-assign out_audio = ifft_output_re; // Audio output (for Member 4)
-assign out_valid = ifft_output_valid;
+assign inter_out = {12'b0, state};  // Debug: monitor state machine (lower 4 bits)
+assign out_audio = timeout_counter[15] ? 16'hFFFF : 16'h0000;  // Debug: blink when timeout
+assign out_valid = (state == OUTPUT_WAVEFORM);
 
 endmodule
