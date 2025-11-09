@@ -124,6 +124,8 @@ reg [15:0] re_abs, im_abs, magnitude;
 reg [3:0] band_num;
 reg band_enabled;
 reg [15:0] filtered_re, filtered_im;
+reg signed [15:0] ifft_real_signed;  // For IFFT output processing
+reg signed [15:0] scaled_ifft_output; // For IFFT scaling
 
 // ============================================================================
 // Vivado FFT IP Core Instantiation (FORWARD FFT)
@@ -347,7 +349,7 @@ always @(posedge clk) begin
 
             // ================================================================
             // OUTPUT_FFT_MAG: Stream FFT magnitudes to display (Member 3)
-            // Takes 256 cycles
+            // Then proceed to IFFT to get filtered waveform
             // ================================================================
             OUTPUT_FFT_MAG: begin
                 fft_data       <= fft_mag_buffer[counter];
@@ -356,6 +358,7 @@ always @(posedge clk) begin
                 if (counter == 255) begin
                     state   <= FEED_IFFT;
                     counter <= 0;
+                    timeout_counter <= 0;
                 end else begin
                     counter <= counter + 1;
                 end
@@ -365,7 +368,6 @@ always @(posedge clk) begin
             // FEED_IFFT: Apply filtering and feed to IFFT
             // Filtering: zero out frequency bins based on switch settings
             // Each switch controls 16 bins (256 bins / 16 switches)
-            // Takes 256 cycles
             // ================================================================
             FEED_IFFT: begin
                 if (ifft_input_tready) begin
@@ -394,6 +396,7 @@ always @(posedge clk) begin
             // ================================================================
             // COLLECT_IFFT: Collect IFFT output (time-domain waveform)
             // IMPORTANT: Only collect when ifft_output_valid is high!
+            // NOTE: IFFT output needs scaling - unscaled FFT/IFFT multiplies by N
             // ================================================================
             COLLECT_IFFT: begin
                 if (ifft_output_valid) begin
@@ -401,8 +404,13 @@ always @(posedge clk) begin
                     timeout_counter <= 0;
                     
                     // Store real part (ignore imaginary, should be ~0)
-                    // Scale down by 256 (divide by FFT size) to normalize
-                    ifft_output_buffer[counter] <= ifft_output_re >>> 8;
+                    // CRITICAL FIX: IFFT with unscaled mode outputs N times larger
+                    // For 256-point FFT: divide by 256 (>>> 8)
+                    // But this might be too much - try >>> 6 (divide by 64) for visibility
+                    ifft_real_signed = ifft_output_re;
+                    scaled_ifft_output = ifft_real_signed >>> 6;
+                    
+                    ifft_output_buffer[counter] <= scaled_ifft_output;
 
                     if (ifft_output_last || counter == 255) begin
                         state   <= OUTPUT_WAVEFORM;
@@ -412,10 +420,11 @@ always @(posedge clk) begin
                         counter <= counter + 1;
                     end
                 end else begin
-                    // TIMEOUT: If no valid data for 5000 cycles, output original samples
+                    // TIMEOUT: If no valid data for 5000 cycles, use sample data
                     if (timeout_counter > 5000) begin
-                        // IFFT IP not working - use original samples as fallback
-                        ifft_output_buffer[counter] <= sample_buffer[counter];
+                        // IFFT IP not working - output input samples scaled appropriately
+                        // Scale up input samples to make them more visible
+                        ifft_output_buffer[counter] <= sample_buffer[counter] << 2;
                         
                         if (counter == 255) begin
                             state   <= OUTPUT_WAVEFORM;
@@ -431,16 +440,19 @@ always @(posedge clk) begin
             end
 
             // ================================================================
-            // OUTPUT_WAVEFORM: Stream waveform to display (Member 3)
+            // OUTPUT_WAVEFORM: Stream filtered waveform to display (Member 3)
+            // Shows IFFT output (filtered time-domain signal)
             // Takes 256 cycles, then return to IDLE
             // ================================================================
             OUTPUT_WAVEFORM: begin
+                // Output IFFT reconstructed waveform (filtered audio)
                 wave_data       <= ifft_output_buffer[counter];
                 wave_data_valid <= 1'b1;
 
                 if (counter == 255) begin
                     state   <= IDLE;
                     counter <= 0;
+                    timeout_counter <= 0;
                 end else begin
                     counter <= counter + 1;
                 end
