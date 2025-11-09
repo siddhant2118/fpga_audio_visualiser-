@@ -1,22 +1,40 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 09.11.2025 00:28:19
-// Design Name: 
-// Module Name: top_adhavan
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
+// Module: top_adhavan
+// Description: FFT-based audio processor using Vivado FFT IP Core
+//
+// Architecture:
+//   1. Read 256 samples from Member 1's BRAM
+//   2. Feed to Vivado FFT IP (256-point, streaming)
+//   3. Calculate magnitude and apply switch-based filtering
+//   4. Feed filtered spectrum to Vivado IFFT IP
+//   5. Output magnitude data and waveform data to displays
+//
+// IMPORTANT: You must add TWO Vivado IP cores to this project:
+//   1. FFT IP Core (xfft_0) - for forward FFT
+//   2. FFT IP Core (xfft_1) - for inverse FFT (IFFT)
+//
+// To add FFT IP in Vivado:
+//   1. IP Catalog -> Math Functions -> Transforms -> Fast Fourier Transform
+//   2. Configuration:
+//      - Transform Length: 256
+//      - Target Clock Frequency: 100 MHz
+//      - Implementation: Pipelined, Streaming I/O
+//      - Input Data Width: 16 bits
+//      - Phase Factor Width: 16 bits
+//      - Scaling: Unscaled
+//      - CORDIC Algorithm: Unscaled
+//      - Output Ordering: Natural Order
+//      - Control Signals: Optional TLAST and optional TREADY
+//   3. For IFFT (xfft_1): Same config but check "IFFT" checkbox
+//
+// Resource Estimate (per FFT IP):
+//   - LUTs: ~2000-3000
+//   - FFs: ~1500-2500
+//   - DSPs: 3-5
+//   - BRAMs: 2-4
+//   Total for both FFTs + control logic: ~6000 LUTs, ~5000 FFs (well within Basys3 limits)
+//
 //////////////////////////////////////////////////////////////////////////////////
 
 module top_adhavan #(
@@ -25,287 +43,366 @@ module top_adhavan #(
 )(
     input  wire        clk,
     input  wire        reset,
-    
-    input  wire        frame_done,     // from Member 1
+
+    input  wire        frame_done,      // from Member 1
     input  wire [11:0] m2_rd_data,      // from Member 1's BRAM
     output reg  [7:0]  m2_rd_addr,      // address to Member 1's BRAM
-    
-    output wire [15:0] inter_out,
 
-    input  wire [15:0] sw,             // 16 switches for filtering control
-    output reg  [15:0] fft_data = 0,        // FFT magnitude output (one bin per clock)
-    output reg  [15:0] wave_data = 0,       // Waveform output (one sample per clock)
+    output wire [15:0] inter_out,       // debug output (FFT real part)
+
+    input  wire [15:0] sw,              // 16 switches for filtering control
+    output reg  [15:0] fft_data = 0,    // FFT magnitude output (one bin per clock)
+    output reg  [15:0] wave_data = 0,   // Waveform output (one sample per clock)
     output reg  fft_data_valid = 0,     // Valid signal for fft_data
     output reg  wave_data_valid = 0,    // Valid signal for wave_data
-    output wire [15:0] out_audio,      // Final output after IFFT
+    output wire [15:0] out_audio,       // Final output after IFFT
     output wire        out_valid
 );
 
-// ----------------------------
-// Sample buffer + read control
-// ----------------------------
-reg        reading_frame = 0;
-reg [7:0]  sample_idx     = 0;
-reg [15:0] sample_buffer_real [0:255];  // real part, 16-bit
-reg        buffer_full    = 0;
+// ============================================================================
+// State Machine for Overall Control
+// ============================================================================
+localparam IDLE             = 4'd0;
+localparam READ_SAMPLES     = 4'd1;
+localparam WAIT_FFT_READY   = 4'd2;
+localparam FEED_FFT         = 4'd3;
+localparam COLLECT_FFT      = 4'd4;
+localparam OUTPUT_FFT_MAG   = 4'd5;
+localparam FEED_IFFT        = 4'd6;
+localparam COLLECT_IFFT     = 4'd7;
+localparam OUTPUT_WAVEFORM  = 4'd8;
 
-always @(posedge clk) begin
-    if (reset) begin
-        m2_rd_addr    <= 0;
-        sample_idx    <= 0;
-        reading_frame <= 0;
-        buffer_full   <= 0;
-    end else begin
-        if (frame_done && !reading_frame) begin
-            reading_frame <= 1;
-            m2_rd_addr    <= 0;
-            sample_idx    <= 0;
-            buffer_full   <= 0;
-        end else if (reading_frame) begin
-            // Capture sample into local buffer
-            sample_buffer_real[sample_idx] <= { {4{m2_rd_data[11]}}, m2_rd_data };  // sign-extend to 16-bit
-            sample_idx    <= sample_idx + 1;
-            m2_rd_addr    <= m2_rd_addr + 1;
+reg [3:0] state = IDLE;
+reg [7:0] counter = 0;
 
-            if (sample_idx == 8'd255) begin
-                reading_frame <= 0;
-                buffer_full   <= 1;  // Trigger FFT processing
-            end
-        end else if (buffer_full && !fft_feeding) begin
-            // Clear buffer_full when FFT feeding is about to start
-            buffer_full <= 0;
-        end
-    end
-end
+// ============================================================================
+// Sample Buffer (256 samples from BRAM)
+// ============================================================================
+reg [15:0] sample_buffer [0:255];  // Sign-extended 12->16 bit samples
 
-// ----------------------------
-// FFT Feeding Logic
-// ----------------------------
-reg [7:0] fft_idx = 0;
-reg       fft_feeding = 0;
-reg       fft_ce = 0;
+// ============================================================================
+// FFT Input/Output Buffers
+// ============================================================================
+reg [15:0] fft_input_re;
+reg [15:0] fft_input_im;
+reg        fft_input_valid;
+reg        fft_input_last;
 
-wire [31:0] fft_in_sample = {sample_buffer_real[fft_idx], 16'd0};  // real + 0j
+wire [15:0] fft_output_re;
+wire [15:0] fft_output_im;
+wire        fft_output_valid;
+wire        fft_output_last;
+wire        fft_output_ready;
 
-wire [31:0] fft_out_sample;
-wire        fft_sync;
+// FFT spectrum storage (magnitude and complex)
+reg [15:0] fft_mag_buffer [0:255];     // Magnitude for display
+reg [31:0] fft_complex_buffer [0:255]; // {real[15:0], imag[15:0]} for filtering
 
-fftmain u_fft (
-    .i_clk    (clk),
-    .i_reset  (reset),
-    .i_ce     (fft_ce),
-    .i_sample (fft_in_sample),
-    .o_result (fft_out_sample),
-    .o_sync   (fft_sync)
+// ============================================================================
+// IFFT Input/Output Buffers
+// ============================================================================
+reg [15:0] ifft_input_re;
+reg [15:0] ifft_input_im;
+reg        ifft_input_valid;
+reg        ifft_input_last;
+
+wire [15:0] ifft_output_re;
+wire [15:0] ifft_output_im;
+wire        ifft_output_valid;
+wire        ifft_output_last;
+wire        ifft_output_ready;
+
+// IFFT output storage
+reg [15:0] ifft_output_buffer [0:255];  // Time-domain waveform
+
+// ============================================================================
+// Vivado FFT IP Core Instantiation (FORWARD FFT)
+// ============================================================================
+// NOTE: Replace this with actual IP instantiation template from Vivado
+// After adding the IP, right-click -> "Open IP Example Design" to see template
+//
+// The IP uses AXI4-Stream interface:
+//   s_axis_data_tdata[31:0] = {imag[15:0], real[15:0]}
+//   s_axis_data_tvalid
+//   s_axis_data_tready
+//   s_axis_data_tlast
+//   m_axis_data_tdata[31:0] = {imag[15:0], real[15:0]}
+//   m_axis_data_tvalid
+//   m_axis_data_tready
+//   m_axis_data_tlast
+
+wire [31:0] fft_input_tdata  = {fft_input_im, fft_input_re};
+wire [31:0] fft_output_tdata;
+wire        fft_input_tready;
+
+assign fft_output_re = fft_output_tdata[15:0];
+assign fft_output_im = fft_output_tdata[31:16];
+
+// UNCOMMENT AND CONNECT AFTER ADDING FFT IP TO PROJECT:
+/*
+xfft_0 forward_fft (
+    .aclk                   (clk),
+    .aresetn                (~reset),
+    .s_axis_config_tdata    (8'b00000001),  // Forward FFT, natural order output
+    .s_axis_config_tvalid   (1'b1),
+    .s_axis_config_tready   (),
+    .s_axis_data_tdata      (fft_input_tdata),
+    .s_axis_data_tvalid     (fft_input_valid),
+    .s_axis_data_tready     (fft_input_tready),
+    .s_axis_data_tlast      (fft_input_last),
+    .m_axis_data_tdata      (fft_output_tdata),
+    .m_axis_data_tvalid     (fft_output_valid),
+    .m_axis_data_tready     (fft_output_ready),
+    .m_axis_data_tlast      (fft_output_last),
+    .event_frame_started    (),
+    .event_tlast_unexpected (),
+    .event_tlast_missing    (),
+    .event_data_in_channel_halt ()
 );
+*/
 
-assign inter_out = fft_out_sample[31:16];
+// TEMPORARY: Simulate FFT IP behavior for compilation (REMOVE AFTER ADDING IP)
+assign fft_input_tready  = 1'b1;  // Always ready
+assign fft_output_tdata  = {fft_input_im, fft_input_re};  // Pass-through
+assign fft_output_valid  = fft_input_valid;
+assign fft_output_last   = fft_input_last;
+assign fft_output_ready  = 1'b1;
 
-// Feed FFT when buffer is full
+// ============================================================================
+// Vivado FFT IP Core Instantiation (INVERSE FFT)
+// ============================================================================
+wire [31:0] ifft_input_tdata  = {ifft_input_im, ifft_input_re};
+wire [31:0] ifft_output_tdata;
+wire        ifft_input_tready;
+
+assign ifft_output_re = ifft_output_tdata[15:0];
+assign ifft_output_im = ifft_output_tdata[31:16];
+
+// UNCOMMENT AND CONNECT AFTER ADDING IFFT IP TO PROJECT:
+/*
+xfft_1 inverse_fft (
+    .aclk                   (clk),
+    .aresetn                (~reset),
+    .s_axis_config_tdata    (8'b00000000),  // Inverse FFT (bit 0 = 0)
+    .s_axis_config_tvalid   (1'b1),
+    .s_axis_config_tready   (),
+    .s_axis_data_tdata      (ifft_input_tdata),
+    .s_axis_data_tvalid     (ifft_input_valid),
+    .s_axis_data_tready     (ifft_input_tready),
+    .s_axis_data_tlast      (ifft_input_last),
+    .m_axis_data_tdata      (ifft_output_tdata),
+    .m_axis_data_tvalid     (ifft_output_valid),
+    .m_axis_data_tready     (ifft_output_ready),
+    .m_axis_data_tlast      (ifft_output_last),
+    .event_frame_started    (),
+    .event_tlast_unexpected (),
+    .event_tlast_missing    (),
+    .event_data_in_channel_halt ()
+);
+*/
+
+// TEMPORARY: Simulate IFFT IP behavior for compilation (REMOVE AFTER ADDING IP)
+assign ifft_input_tready  = 1'b1;  // Always ready
+assign ifft_output_tdata  = {ifft_input_im, ifft_input_re};  // Pass-through
+assign ifft_output_valid  = ifft_input_valid;
+assign ifft_output_last   = ifft_input_last;
+assign ifft_output_ready  = 1'b1;
+
+// ============================================================================
+// Main State Machine
+// ============================================================================
 always @(posedge clk) begin
     if (reset) begin
-        fft_idx     <= 0;
-        fft_ce      <= 0;
-        fft_feeding <= 0;
+        state             <= IDLE;
+        counter           <= 0;
+        m2_rd_addr        <= 0;
+        fft_input_valid   <= 0;
+        fft_input_last    <= 0;
+        ifft_input_valid  <= 0;
+        ifft_input_last   <= 0;
+        fft_data_valid    <= 0;
+        wave_data_valid   <= 0;
     end else begin
-        if (buffer_full && !fft_feeding) begin
-            fft_feeding <= 1;
-            fft_idx     <= 0;
-            fft_ce      <= 1;
-        end else if (fft_feeding) begin
-            if (fft_idx == 8'd255) begin
-                fft_ce      <= 0;
-                fft_feeding <= 0;
-            end else begin
-                fft_idx <= fft_idx + 1;
+        // Default: de-assert valid signals
+        fft_input_valid  <= 0;
+        fft_input_last   <= 0;
+        ifft_input_valid <= 0;
+        ifft_input_last  <= 0;
+        fft_data_valid   <= 0;
+        wave_data_valid  <= 0;
+
+        case (state)
+            // ================================================================
+            // IDLE: Wait for frame_done signal from Member 1
+            // ================================================================
+            IDLE: begin
+                counter <= 0;
+                if (frame_done) begin
+                    state      <= READ_SAMPLES;
+                    m2_rd_addr <= 0;
+                end
             end
-        end
+
+            // ================================================================
+            // READ_SAMPLES: Read 256 samples from Member 1's BRAM
+            // Takes 257 cycles (1 cycle latency + 256 reads)
+            // ================================================================
+            READ_SAMPLES: begin
+                if (counter == 0) begin
+                    // First cycle: just set address
+                    m2_rd_addr <= 0;
+                    counter    <= counter + 1;
+                end else if (counter <= 256) begin
+                    // Cycles 1-256: capture data and advance address
+                    sample_buffer[counter-1] <= { {4{m2_rd_data[11]}}, m2_rd_data };  // Sign-extend 12->16
+                    m2_rd_addr               <= m2_rd_addr + 1;
+                    counter                  <= counter + 1;
+
+                    if (counter == 256) begin
+                        state   <= FEED_FFT;
+                        counter <= 0;
+                    end
+                end
+            end
+
+            // ================================================================
+            // FEED_FFT: Feed 256 samples to FFT IP (streaming)
+            // Takes 256 cycles
+            // ================================================================
+            FEED_FFT: begin
+                if (fft_input_tready) begin  // Wait for FFT to be ready
+                    fft_input_re    <= sample_buffer[counter];
+                    fft_input_im    <= 16'd0;  // Imaginary part is zero
+                    fft_input_valid <= 1'b1;
+                    fft_input_last  <= (counter == 255);
+
+                    if (counter == 255) begin
+                        state   <= COLLECT_FFT;
+                        counter <= 0;
+                    end else begin
+                        counter <= counter + 1;
+                    end
+                end
+            end
+
+            // ================================================================
+            // COLLECT_FFT: Collect FFT output and calculate magnitude
+            // FFT IP outputs in natural order (no bit-reversal needed!)
+            // Takes 256 cycles
+            // ================================================================
+            COLLECT_FFT: begin
+                if (fft_output_valid) begin
+                    // Calculate magnitude using L1 norm: |Re| + |Im|
+                    wire signed [15:0] re_signed = fft_output_re;
+                    wire signed [15:0] im_signed = fft_output_im;
+                    wire [15:0] re_abs = re_signed[15] ? (~re_signed + 1) : re_signed;
+                    wire [15:0] im_abs = im_signed[15] ? (~im_signed + 1) : im_signed;
+                    wire [15:0] magnitude = re_abs + im_abs;
+
+                    // Store magnitude and complex data
+                    fft_mag_buffer[counter]     <= magnitude;
+                    fft_complex_buffer[counter] <= {fft_output_re, fft_output_im};
+
+                    if (fft_output_last || counter == 255) begin
+                        state   <= OUTPUT_FFT_MAG;
+                        counter <= 0;
+                    end else begin
+                        counter <= counter + 1;
+                    end
+                end
+            end
+
+            // ================================================================
+            // OUTPUT_FFT_MAG: Stream FFT magnitudes to display (Member 3)
+            // Takes 256 cycles
+            // ================================================================
+            OUTPUT_FFT_MAG: begin
+                fft_data       <= fft_mag_buffer[counter];
+                fft_data_valid <= 1'b1;
+
+                if (counter == 255) begin
+                    state   <= FEED_IFFT;
+                    counter <= 0;
+                end else begin
+                    counter <= counter + 1;
+                end
+            end
+
+            // ================================================================
+            // FEED_IFFT: Apply filtering and feed to IFFT
+            // Filtering: zero out frequency bins based on switch settings
+            // Each switch controls 16 bins (256 bins / 16 switches)
+            // Takes 256 cycles
+            // ================================================================
+            FEED_IFFT: begin
+                if (ifft_input_tready) begin
+                    // Determine which frequency band this bin belongs to
+                    wire [3:0] band_num = counter[7:4];  // counter / 16
+                    wire       band_enabled = sw[band_num];
+
+                    // Apply filtering: zero out if band is disabled
+                    wire [15:0] filtered_re = band_enabled ? fft_complex_buffer[counter][15:0]  : 16'd0;
+                    wire [15:0] filtered_im = band_enabled ? fft_complex_buffer[counter][31:16] : 16'd0;
+
+                    ifft_input_re    <= filtered_re;
+                    ifft_input_im    <= filtered_im;
+                    ifft_input_valid <= 1'b1;
+                    ifft_input_last  <= (counter == 255);
+
+                    if (counter == 255) begin
+                        state   <= COLLECT_IFFT;
+                        counter <= 0;
+                    end else begin
+                        counter <= counter + 1;
+                    end
+                end
+            end
+
+            // ================================================================
+            // COLLECT_IFFT: Collect IFFT output (time-domain waveform)
+            // Takes 256 cycles
+            // ================================================================
+            COLLECT_IFFT: begin
+                if (ifft_output_valid) begin
+                    // Store real part (ignore imaginary, should be ~0)
+                    // Scale down by 256 (divide by FFT size) to normalize
+                    ifft_output_buffer[counter] <= ifft_output_re >>> 8;
+
+                    if (ifft_output_last || counter == 255) begin
+                        state   <= OUTPUT_WAVEFORM;
+                        counter <= 0;
+                    end else begin
+                        counter <= counter + 1;
+                    end
+                end
+            end
+
+            // ================================================================
+            // OUTPUT_WAVEFORM: Stream waveform to display (Member 3)
+            // Takes 256 cycles, then return to IDLE
+            // ================================================================
+            OUTPUT_WAVEFORM: begin
+                wave_data       <= ifft_output_buffer[counter];
+                wave_data_valid <= 1'b1;
+
+                if (counter == 255) begin
+                    state   <= IDLE;
+                    counter <= 0;
+                end else begin
+                    counter <= counter + 1;
+                end
+            end
+
+            default: state <= IDLE;
+        endcase
     end
 end
 
-    // ----------------------------
-    // FFT Magnitude Calculation
-    // ----------------------------
-    wire signed [15:0] fft_re = fft_out_sample[31:16];
-    wire signed [15:0] fft_im = fft_out_sample[15:0];
-    wire [15:0] fft_re_abs = fft_re[15] ? (~fft_re + 1) : fft_re;
-    wire [15:0] fft_im_abs = fft_im[15] ? (~fft_im + 1) : fft_im;
-    wire [15:0] fft_mag_approx = fft_re_abs + fft_im_abs;  // L1 norm approximation
-
-    // ----------------------------
-    // Frequency Domain Filtering (combine with collection)
-    // ----------------------------
-    wire [3:0] filt_group_sel = fft_out_idx[7:4];  // Use collection index
-    wire filt_band_enable = sw[filt_group_sel];
-    wire signed [15:0] filt_re = filt_band_enable ? fft_re : 16'sd0;
-    wire signed [15:0] filt_im = filt_band_enable ? fft_im : 16'sd0;
-
-  // ----------------------------
-    // Bit-reversal function for FFT output reordering
-    // ----------------------------
-    function [7:0] bit_reverse_8;
-        input [7:0] in;
-        begin
-            bit_reverse_8 = {in[0], in[1], in[2], in[3], in[4], in[5], in[6], in[7]};
-        end
-    endfunction
-
-    // ----------------------------
-    // FFT Output Collection and Storage
-    // ----------------------------
-    reg [7:0] fft_out_idx = 0;
-    reg [15:0] fft_magnitude_buffer [0:255];
-    reg [31:0] filtered_fft_buffer [0:255];  // Store {real, imag}
-    reg fft_collecting = 0;
-    reg fft_output_ready = 0;
-    reg [7:0] fft_output_idx = 0;
-    reg fft_outputting = 0;
-    reg filtering_complete = 0;
-
-    always @(posedge clk) begin
-        if (reset) begin
-            fft_out_idx <= 0;
-            fft_collecting <= 0;
-            fft_output_ready <= 0;
-            fft_outputting <= 0;
-            filtering_complete <= 0;
-            fft_data_valid <= 0;
-        end else begin
-            if (fft_sync) begin
-                // FFT sync indicates first output is ready
-                fft_collecting <= 1;
-                fft_out_idx <= 0;
-                fft_output_ready <= 0;
-                filtering_complete <= 0;
-            end else if (fft_collecting) begin
-                // Collect FFT outputs with bit-reversal to get natural order
-                // FFT outputs in bit-reversed order, so reverse the index
-                fft_magnitude_buffer[bit_reverse_8(fft_out_idx)] <= fft_mag_approx;
-                filtered_fft_buffer[bit_reverse_8(fft_out_idx)] <= {filt_re, filt_im};
-                fft_out_idx <= fft_out_idx + 1;
-
-                if (fft_out_idx == 8'd255) begin
-                    fft_collecting <= 0;
-                    fft_output_ready <= 1;
-                    fft_output_idx <= 0;
-                    fft_outputting <= 1;
-                    filtering_complete <= 1;
-                end
-            end else if (fft_outputting) begin
-                // Output FFT magnitudes sequentially (now in natural order)
-                fft_data <= fft_magnitude_buffer[fft_output_idx];
-                fft_data_valid <= 1;
-                fft_output_idx <= fft_output_idx + 1;
-                if (fft_output_idx == 8'd255) begin
-                    fft_outputting <= 0;
-                    fft_output_ready <= 0;
-                    fft_data_valid <= 0;
-                end
-            end else if (filtering_complete && !ifft_feeding) begin
-                // Clear filtering_complete when IFFT feeding is about to start
-                filtering_complete <= 0;
-                fft_data_valid <= 0;
-            end else begin
-                fft_data_valid <= 0;
-            end
-        end
-    end
-    
-    // ----------------------------
-    // IFFT Input Control
-    // ----------------------------
-    reg [7:0] ifft_in_idx = 0;
-    reg ifft_feeding = 0;
-    reg ifft_ce = 0;
-    // IFFT needs bit-reversed input, so reverse the index back
-    wire [31:0] ifft_in_sample = filtered_fft_buffer[bit_reverse_8(ifft_in_idx)];
-
-    // Feed IFFT after filtering is complete
-    always @(posedge clk) begin
-        if (reset) begin
-            ifft_in_idx <= 0;
-            ifft_ce <= 0;
-            ifft_feeding <= 0;
-        end else begin
-            if (filtering_complete && !ifft_feeding) begin
-                ifft_feeding <= 1;
-                ifft_in_idx <= 0;
-                ifft_ce <= 1;
-            end else if (ifft_feeding) begin
-                if (ifft_in_idx == 8'd255) begin
-                    ifft_ce <= 0;
-                    ifft_feeding <= 0;
-                end else begin
-                    ifft_in_idx <= ifft_in_idx + 1;
-                end
-            end
-        end
-    end
-    
-    // ----------------------------
-    // IFFT
-    // ----------------------------
-    wire [31:0] ifft_out_sample;
-    wire        ifft_sync;
-
-    ifftmain u_ifft (
-        .i_clk    (clk),
-        .i_reset  (reset),
-        .i_ce     (ifft_ce),
-        .i_sample (ifft_in_sample),
-        .o_result (ifft_out_sample),
-        .o_sync   (ifft_sync)
-    );
-
-    // ----------------------------
-    // IFFT Output Collection
-    // ----------------------------
-    reg [7:0] ifft_out_idx = 0;
-    reg [15:0] waveform_buffer [0:255];
-    reg ifft_collecting = 0;
-    reg waveform_ready = 0;
-    reg [7:0] waveform_output_idx = 0;
-    reg waveform_outputting = 0;
-
-    always @(posedge clk) begin
-        if (reset) begin
-            ifft_out_idx <= 0;
-            ifft_collecting <= 0;
-            waveform_ready <= 0;
-            waveform_outputting <= 0;
-            wave_data_valid <= 0;
-        end else begin
-            if (ifft_sync) begin
-                ifft_collecting <= 1;
-                ifft_out_idx <= 0;
-                waveform_ready <= 0;
-            end else if (ifft_collecting) begin
-                // Collect IFFT outputs with bit-reversal to get natural order
-                waveform_buffer[bit_reverse_8(ifft_out_idx)] <= ifft_out_sample[31:16];  // Real part
-                ifft_out_idx <= ifft_out_idx + 1;
-                if (ifft_out_idx == 8'd255) begin
-                    ifft_collecting <= 0;
-                    waveform_ready <= 1;
-                    waveform_output_idx <= 0;
-                    waveform_outputting <= 1;
-                end
-            end else if (waveform_outputting) begin
-                // Output waveform samples sequentially (now in natural order)
-                wave_data <= waveform_buffer[waveform_output_idx];
-                wave_data_valid <= 1;
-                waveform_output_idx <= waveform_output_idx + 1;
-                if (waveform_output_idx == 8'd255) begin
-                    waveform_outputting <= 0;
-                    waveform_ready <= 0;
-                    wave_data_valid <= 0;
-                end
-            end else begin
-                wave_data_valid <= 0;
-            end
-        end
-    end
-
-    assign out_audio = ifft_out_sample[31:16];  // Real part
-    assign out_valid = ifft_ce;  // Valid when IFFT is being fed
+// ============================================================================
+// Debug Outputs
+// ============================================================================
+assign inter_out = fft_output_re;  // Debug: monitor FFT real output
+assign out_audio = ifft_output_re; // Audio output (for Member 4)
+assign out_valid = ifft_output_valid;
 
 endmodule
