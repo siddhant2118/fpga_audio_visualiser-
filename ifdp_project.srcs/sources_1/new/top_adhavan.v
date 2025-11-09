@@ -150,9 +150,6 @@ assign fft_output_im = fft_output_tdata[31:16];
 // CRITICAL: Drive ready signals high (from tutorial - must always be ready)
 assign fft_output_ready = 1'b1;
 
-// Always ready to accept FFT output
-assign fft_output_ready = 1'b1;
-
 // FFT IP instantiation - ACTIVE
 xfft_0 forward_fft (
     .aclk                   (clk),
