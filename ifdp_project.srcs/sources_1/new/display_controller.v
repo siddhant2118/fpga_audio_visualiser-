@@ -44,15 +44,28 @@ module display_controller(
     wire [5:0] height = fft_mag[band_idx] >> 11;  // Scale to 0-63
 
     // Better waveform indexing: map 96 pixels to 256 samples
-    wire [7:0] samp_idx = (x_b << 8) / 96;  // (x_b * 256) / 96
+    wire [7:0] samp_idx_curr = (x_b << 8) / 96;  // Current sample index
+    wire [7:0] samp_idx_next = ((x_b + 7'd1) << 8) / 96;  // Next column's sample index
     
-    // FIX: Convert signed 16-bit to unsigned, then scale to 0-63
-    // Signed range: -32768 to +32767
-    // Add 32768 to make unsigned: 0 to 65535
-    // Then scale to 0-63: divide by 1024 (right shift 10)
-    wire signed [15:0] wave_signed = wave_sample[samp_idx];
-    wire [16:0] wave_unsigned = wave_signed + 17'd32768;  // Convert to unsigned (17 bits to avoid overflow)
-    wire [5:0] samp_y = wave_unsigned[16:10];  // Scale to 0-63 (divide by 1024)
+    // Get current and next sample values
+    wire signed [15:0] wave_curr_signed = wave_sample[samp_idx_curr];
+    wire signed [15:0] wave_next_signed = (x_b < 95) ? wave_sample[samp_idx_next] : wave_curr_signed;
+    
+    // Convert both to unsigned and scale to 0-63 pixel range
+    wire [16:0] wave_curr_unsigned = wave_curr_signed + 17'd32768;
+    wire [16:0] wave_next_unsigned = wave_next_signed + 17'd32768;
+    wire [5:0] samp_y_curr = wave_curr_unsigned[16:10];  // 0-63
+    wire [5:0] samp_y_next = wave_next_unsigned[16:10];  // 0-63
+    
+    // Calculate line drawing between current and next sample
+    // If samples are on same row, draw that row
+    // If samples span multiple rows, draw all rows in between (vertical line segment)
+    wire [5:0] y_min = (samp_y_curr < samp_y_next) ? samp_y_curr : samp_y_next;
+    wire [5:0] y_max = (samp_y_curr > samp_y_next) ? samp_y_curr : samp_y_next;
+    
+    // Check if current pixel y-coordinate is on the line
+    wire [5:0] y_b_inverted = 6'd63 - y_b;  // Invert y for comparison
+    wire on_waveform_line = (y_b_inverted >= y_min) && (y_b_inverted <= y_max);
 
 
     always @ (*) begin
@@ -67,7 +80,8 @@ module display_controller(
         end else
             colorA = 16'h0000;    // background black
 
-        if (y_b == (63 - samp_y))
+        // Draw smooth waveform line (connects adjacent samples)
+        if (on_waveform_line)
             colorB = 16'h0695;    // turquoise trace
         else
             colorB = 16'h0000;    // background black

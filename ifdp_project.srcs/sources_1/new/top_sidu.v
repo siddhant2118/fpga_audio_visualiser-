@@ -39,12 +39,12 @@ module top_sidu(
     // NOISE FILTERING for microphone
     // ========================================================================
     // 1. DC offset removal: MIC3 centers around ~2048, remove this offset
-    // 2. Noise gate: Suppress small signals below threshold (20 ADC units)
+    // 2. Noise gate: Suppress small signals below threshold (40 ADC units for better rejection)
     // 3. Simple averaging: 4-sample moving average for smoothing
     // ========================================================================
     
     parameter DC_OFFSET = 12'd2048;     // Typical MIC3 DC offset
-    parameter NOISE_THRESHOLD = 12'd20; // Ignore signals below this magnitude
+    parameter NOISE_THRESHOLD = 12'd40; // Increased from 20 to reject more noise
     
     // DC offset removal
     wire signed [12:0] mic_centered = {1'b0, mic_in} - {1'b0, DC_OFFSET};  // 13-bit signed
