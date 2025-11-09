@@ -147,6 +147,9 @@ wire        fft_input_tready;
 assign fft_output_re = fft_output_tdata[15:0];
 assign fft_output_im = fft_output_tdata[31:16];
 
+// Always ready to accept FFT output
+assign fft_output_ready = 1'b1;
+
 // FFT IP instantiation - ACTIVE
 xfft_0 forward_fft (
     .aclk                   (clk),
