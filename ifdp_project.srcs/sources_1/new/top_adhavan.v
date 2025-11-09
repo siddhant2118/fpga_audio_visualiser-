@@ -398,6 +398,10 @@ always @(posedge clk) begin
             // IMPORTANT: Only collect when ifft_output_valid is high!
             // NOTE: IFFT output needs scaling - unscaled FFT/IFFT multiplies by N
             // ================================================================
+            // COLLECT_IFFT: Collect IFFT output (time-domain waveform)
+            // IMPORTANT: Only collect when ifft_output_valid is high!
+            // NOTE: IFFT output needs scaling - unscaled FFT/IFFT multiplies by N
+            // ================================================================
             COLLECT_IFFT: begin
                 if (ifft_output_valid) begin
                     // Reset timeout when we get valid data
@@ -405,10 +409,10 @@ always @(posedge clk) begin
                     
                     // Store real part (ignore imaginary, should be ~0)
                     // CRITICAL FIX: IFFT with unscaled mode outputs N times larger
-                    // For 256-point FFT: divide by 256 (>>> 8)
-                    // But this might be too much - try >>> 6 (divide by 64) for visibility
+                    // For 256-point FFT: divide by 256 (>>> 8) is mathematically correct
+                    // But try >>> 4 (÷16) for better visibility
                     ifft_real_signed = ifft_output_re;
-                    scaled_ifft_output = ifft_real_signed >>> 6;
+                    scaled_ifft_output = ifft_real_signed >>> 4;  // Less aggressive scaling
                     
                     ifft_output_buffer[counter] <= scaled_ifft_output;
 
@@ -420,11 +424,12 @@ always @(posedge clk) begin
                         counter <= counter + 1;
                     end
                 end else begin
-                    // TIMEOUT: If no valid data for 5000 cycles, use sample data
+                    // TIMEOUT: If no valid data for 5000 cycles, use ORIGINAL input samples
                     if (timeout_counter > 5000) begin
-                        // IFFT IP not working - output input samples scaled appropriately
-                        // Scale up input samples to make them more visible
-                        ifft_output_buffer[counter] <= sample_buffer[counter] << 2;
+                        // IFFT IP not working - show original captured audio (no filtering)
+                        // Input samples are 12-bit sign-extended to 16-bit
+                        // Scale up by 4x (<<2) for better visibility
+                        ifft_output_buffer[counter] <= sample_buffer[counter] << 4;
                         
                         if (counter == 255) begin
                             state   <= OUTPUT_WAVEFORM;

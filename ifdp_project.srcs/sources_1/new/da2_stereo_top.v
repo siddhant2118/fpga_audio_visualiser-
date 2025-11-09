@@ -7,7 +7,6 @@ module da2_stereo_top(
     input  wire               sample_valid,
     output reg                sample_ready,
     input  wire signed [15:0] sample_l_16,
-    input  wire signed [15:0] sample_r_16,
     // SPI outputs
     output wire               sync_n,
     output wire               sclk,
@@ -16,7 +15,7 @@ module da2_stereo_top(
 );
     // -------------------------------------------------------------------------
     // Instantiate the bit clock generator (NCO).  Produces sclk_bit and a
-    // toggle enable.  The SCLK frequency is 16 × SAMPLE_RATE.
+    // toggle enable.  The SCLK frequency is 16 ï¿½ SAMPLE_RATE.
     // -------------------------------------------------------------------------
     clock_divider u_nco (
     .clk(clk),
@@ -45,15 +44,18 @@ module da2_stereo_top(
         .s16(sample_l_16),
         .u12(l_u12)
     );
-    pcm16_to_u12 #(.ENABLE_DITHER(0)) u_conv_r (
+    /*pcm16_to_u12 #(.ENABLE_DITHER(0)) u_conv_r (
         .s16(sample_r_16),
         .u12(r_u12)
-    );
+    );*/
 
 
     // Pack the 16-bit frames: top four bits zeros, followed by 12 data bits.
-    (* mark_debug = "true", keep = "true" *) wire [15:0] frame_a = {4'b0000, l_u12}; //CHANGE
-    (* mark_debug = "true", keep = "true" *) wire [15:0] frame_b = {4'b0000, r_u12}; //CHANGE
+    // Latch the frames when we accept a sample to prevent them from changing during transmission
+    (* mark_debug = "true", keep = "true" *) reg [15:0] frame_a;
+    (* mark_debug = "true", keep = "true" *) reg [15:0] frame_b;
+    wire [15:0] frame_a_next = {4'b0000, l_u12};
+    wire [15:0] frame_b_next = {4'b0000, l_u12};
 
     // Signals for SPI shifter
     (* mark_debug = "true", keep = "true" *) reg  load_reg;
@@ -86,11 +88,16 @@ module da2_stereo_top(
         if (!rst_n) begin
             sample_ready <= 1'b1;
             load_reg     <= 1'b0;
+            frame_a      <= 16'd0;
+            frame_b      <= 16'd0;
         end else begin
             // Default values
             load_reg <= 1'b0;
             // When idle and a valid sample arrives, capture it
             if (!busy && sample_valid && sample_ready) begin
+                // Latch the frame data when accepting the sample
+                frame_a      <= frame_a_next;
+                frame_b      <= frame_b_next;
                 // Accept sample and trigger load into SPI
                 load_reg     <= 1'b1;
                 sample_ready <= 1'b0;

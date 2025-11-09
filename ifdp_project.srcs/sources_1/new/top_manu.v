@@ -127,8 +127,7 @@ module top_manu #(
                 .wr_sample(wr_data),
                 .ce_sample(src_sample_ready),
                 .sample_valid(src_sample_valid),
-                .sample_l_16(src_sample_l),
-                .sample_r_16(src_sample_r)
+                .sample_l_16(src_sample_l)
             );
         end
     endgenerate
@@ -144,14 +143,14 @@ module top_manu #(
         .sample_valid_out(hp_valid),
         .sample_out(hp_sample_l)
     );
-    dc_block_hp u_dc_r (
+    /*dc_block_hp u_dc_r (
         .clk(clk),
         .rst_n(rst_n),
         .sample_valid_in(src_sample_valid),
         .sample_in(src_sample_r),
-        .sample_valid_out(/* unused */),
+        .sample_valid_out( unused ),
         .sample_out(hp_sample_r)
-    );
+    );*/
 
     // -------------------------------------------------------------------------
     // Soft gain ramp.  Applied to both channels.  Ramp commands come from
@@ -169,7 +168,7 @@ module top_manu #(
         .sample_valid_out(ramp_valid),
         .sample_out(ramp_sample_l)
     );
-    soft_gain_ramp #(
+    /*soft_gain_ramp #(
         .RAMP_STEPS(RAMP_STEPS)
     ) u_ramp_r (
         .clk(clk),
@@ -178,9 +177,9 @@ module top_manu #(
         .sample_in(hp_sample_r),
         .ramp_up(1'b1),
         .ramp_down(1'b0),
-        .sample_valid_out(/* unused */),
+        .sample_valid_out( unused ),
         .sample_out(ramp_sample_r)
-    );
+    );*/
 
     // -------------------------------------------------------------------------
     // Connect to DA2 wrapper.  sample_valid comes from ramp; sample_ready
@@ -191,8 +190,7 @@ module top_manu #(
         .rst_n(rst_n),
         .sample_valid(ramp_valid),
         .sample_ready(src_sample_ready),
-        .sample_l_16(ramp_sample_l),
-        .sample_r_16(ramp_sample_r),
+        .sample_l_16(ramp_sample_l)
         .sync_n(sync_n),
         .sclk(sclk),
         .dina(dina),

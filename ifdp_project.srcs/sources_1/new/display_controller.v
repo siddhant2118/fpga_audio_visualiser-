@@ -41,7 +41,7 @@ module display_controller(
     // FIX: More aggressive scaling for FFT magnitude
     // Original: >> 10 (divide by 1024) - might be too much scaling
     // Try: >> 8 (divide by 256) for more visible bars
-    wire [5:0] height = fft_mag[band_idx] >> 8;  // Scale to 0-63
+    wire [4:0] height = fft_mag[band_idx] >> 9;  // Scale to 0-63
 
     // Better waveform indexing: map 96 pixels to 256 samples
     wire [7:0] samp_idx = (x_b << 8) / 96;  // (x_b * 256) / 96

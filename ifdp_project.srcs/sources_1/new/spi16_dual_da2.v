@@ -43,28 +43,32 @@ module spi16_dual_da2 (
                 dinb    <= frame_b[15];
             end
             // During an active transfer, respond to SCLK toggles
+            // sclk_enable pulses for one cycle on every sclk toggle
+            // When sclk is high, we just had a rising edge (shift and sample)
+            // When sclk is low, we just had a falling edge (output next bit)
             if (busy && sclk_enable) begin
-                // Determine whether this toggle is falling or rising by
-                // inspecting the current SCLK value.  On a falling edge
-                // (sclk_in == 1), update the output bits so they settle
-                // before the upcoming rising edge.  On a rising edge
-                // (sclk_in == 0), shift the registers and update the bit
-                // counter.
                 if (sclk) begin
-                    // Falling edge: output the current MSB
-                    dina <= sh_a[15];
-                    dinb <= sh_b[15];
-                end else begin
-                    // Rising edge: shift and count
-                    sh_a <= {sh_a[14:0], 1'b0};
-                    sh_b <= {sh_b[14:0], 1'b0};
-                    bit_cnt <= bit_cnt + 5'd1;
-                    // When the last bit is shifted (bit_cnt==15), end frame
+                    // Rising edge: shift registers and count bits
+                    // Check if this is the last bit (bit_cnt==15 means we've shifted 15 times,
+                    // and after this shift we'll have shifted 16 times total)
                     if (bit_cnt == 5'd15) begin
+                        // Last shift: shift out bit 0, then end frame
+                        sh_a <= {sh_a[14:0], 1'b0};
+                        sh_b <= {sh_b[14:0], 1'b0};
+                        bit_cnt <= bit_cnt + 5'd1;
                         busy   <= 1'b0;
                         sync_n <= 1'b1;
                         // Idle bits may remain in dina/dinb; keep them
+                    end else begin
+                        // Normal shift
+                        sh_a <= {sh_a[14:0], 1'b0};
+                        sh_b <= {sh_b[14:0], 1'b0};
+                        bit_cnt <= bit_cnt + 5'd1;
                     end
+                end else begin
+                    // Falling edge: output the current MSB so it's stable for next rising edge
+                    dina <= sh_a[15];
+                    dinb <= sh_b[15];
                 end
             end
         end
