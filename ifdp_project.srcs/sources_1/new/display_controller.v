@@ -37,11 +37,22 @@ module display_controller(
     // Each band gets 16 FFT bins (256 bins / 16 bands = 16 bins/band)
     wire [3:0] band_num = x_a / 6;  // 0-15 (16 bands)
     wire [7:0] band_idx = {band_num, 4'b0000};  // band_num * 16
-    wire [5:0] height   = fft_mag[band_idx] >> 10;
+    
+    // FIX: More aggressive scaling for FFT magnitude
+    // Original: >> 10 (divide by 1024) - might be too much scaling
+    // Try: >> 8 (divide by 256) for more visible bars
+    wire [5:0] height = fft_mag[band_idx] >> 8;  // Scale to 0-63
 
     // Better waveform indexing: map 96 pixels to 256 samples
     wire [7:0] samp_idx = (x_b << 8) / 96;  // (x_b * 256) / 96
-    wire [5:0] samp_y  = (wave_sample[samp_idx] * 63) >> 16;
+    
+    // FIX: Convert signed 16-bit to unsigned, then scale to 0-63
+    // Signed range: -32768 to +32767
+    // Add 32768 to make unsigned: 0 to 65535
+    // Then scale to 0-63: divide by 1024 (right shift 10)
+    wire signed [15:0] wave_signed = wave_sample[samp_idx];
+    wire [16:0] wave_unsigned = wave_signed + 17'd32768;  // Convert to unsigned (17 bits to avoid overflow)
+    wire [5:0] samp_y = wave_unsigned[16:10];  // Scale to 0-63 (divide by 1024)
 
 
     always @ (*) begin
