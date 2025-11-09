@@ -1,0 +1,62 @@
+`timescale 1ns/1ps
+module display_controller(
+    input  wire        clk,
+    input  wire [16*256-1:0] fft_flat,
+    input  wire [16*256-1:0] wave_flat,
+    input  wire [12:0] pixel_index_a,   
+    input  wire [12:0] pixel_index_b,
+    
+    output reg  [15:0] colorA,
+    output reg  [15:0] colorB
+);
+    
+    wire clk30hz;
+    clock_div clk1(clk, 1666666, clk30hz);
+    wire [16*256-1:0] fft_buffered;
+    wire [16*256-1:0] wave_buffered;
+    frame_buffer fft(clk30hz, fft_flat, fft_buffered);
+    frame_buffer wave(clk30hz, wave_flat, wave_buffered);
+
+    wire [5:0] y_a = 63 - (pixel_index_a / 96);   
+    wire [6:0] x_a = 95 - (pixel_index_a % 96);  
+    wire [5:0] y_b = pixel_index_b / 96;   
+    wire [6:0] x_b = pixel_index_b % 96;   
+
+    integer i;
+    reg [15:0] fft_mag [0:255];
+    reg [15:0] wave_sample [0:255];
+
+    always @ (*) begin
+        for (i = 0; i < 256; i = i + 1)
+            fft_mag[i] = fft_buffered[i*16 +:16];
+        for (i = 0; i < 256; i = i + 1)
+            wave_sample[i] = wave_buffered[i*16 +:16];
+    end
+
+    wire [7:0] band_idx = x_a / 6 * 16;
+    wire [5:0] height   = fft_mag[band_idx] >> 10;
+    
+    wire [7:0] samp_idx = (x_b * 256) / 96;
+    wire [5:0] samp_y  = (wave_sample[samp_idx] * 63) >> 16;
+
+
+    always @ (*) begin
+        if ((63 - y_a) < height) begin
+//            if (y_a <= 31)
+//                colorA = {5'b11111, y_a << 1, 5'b00000};    // red-yellow gradient
+//            else
+//                colorA = {63 - y_a, 6'b111111, 5'b00000};   // yellow-green gradient
+            colorA = {63 - y_a >> 1, 6'b000000, 5'b11111};    // blue-magenta gradient
+            if (x_a % 6 == 5) colorA = 16'h0000;            // 1px wide gap between the bars
+            if ((x_a % 6 == 0 || x_a % 6 == 4) && (64 - y_a == height)) colorA = 16'h0000;    // rounded corners
+        end else
+            colorA = 16'h0000;    // background black
+
+        if (y_b == (63 - samp_y))
+            colorB = 16'h0695;    // turquoise trace
+        else
+            colorB = 16'h0000;    // background black
+    end
+
+
+endmodule
