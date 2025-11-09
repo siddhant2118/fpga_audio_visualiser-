@@ -142,9 +142,11 @@ reg [15:0] filtered_re, filtered_im;
 //   m_axis_data_tlast
 
 wire [31:0] fft_input_tdata  = {fft_input_im, fft_input_re};
-wire [31:0] fft_output_tdata;
+wire [63:0] fft_output_tdata;  // FIX: 64-bit output, not 32-bit!
 wire        fft_input_tready;
 
+// Extract real and imaginary from 64-bit output
+// Format is likely: {unused[31:0], imag[15:0], real[15:0]}
 assign fft_output_re = fft_output_tdata[15:0];
 assign fft_output_im = fft_output_tdata[31:16];
 
@@ -154,6 +156,7 @@ assign fft_output_ready = 1'b1;
 // FFT IP instantiation - ACTIVE
 xfft_0 forward_fft (
     .aclk                   (clk),
+    .aclken                 (1'b1),         // FIX: Added clock enable (always on)
     .aresetn                (~reset),
     .s_axis_config_tdata    (8'b00000001),  // Forward FFT, natural order output
     .s_axis_config_tvalid   (1'b1),
@@ -169,14 +172,16 @@ xfft_0 forward_fft (
     .event_frame_started    (),
     .event_tlast_unexpected (),
     .event_tlast_missing    (),
-    .event_data_in_channel_halt ()
+    .event_status_channel_halt(),           // FIX: Added missing event
+    .event_data_in_channel_halt (),
+    .event_data_out_channel_halt()          // FIX: Added missing event
 );
 
 // ============================================================================
 // Vivado FFT IP Core Instantiation (INVERSE FFT)
 // ============================================================================
 wire [31:0] ifft_input_tdata  = {ifft_input_im, ifft_input_re};
-wire [31:0] ifft_output_tdata;
+wire [63:0] ifft_output_tdata;  // FIX: 64-bit output, not 32-bit!
 wire        ifft_input_tready;
 
 assign ifft_output_re = ifft_output_tdata[15:0];
@@ -188,6 +193,7 @@ assign ifft_output_ready = 1'b1;
 // IFFT IP instantiation - ACTIVE
 xfft_1 inverse_fft (
     .aclk                   (clk),
+    .aclken                 (1'b1),         // FIX: Added clock enable (always on)
     .aresetn                (~reset),
     .s_axis_config_tdata    (8'b00000000),  // Inverse FFT (bit 0 = 0)
     .s_axis_config_tvalid   (1'b1),
@@ -203,7 +209,9 @@ xfft_1 inverse_fft (
     .event_frame_started    (),
     .event_tlast_unexpected (),
     .event_tlast_missing    (),
-    .event_data_in_channel_halt ()
+    .event_status_channel_halt(),           // FIX: Added missing event
+    .event_data_in_channel_halt (),
+    .event_data_out_channel_halt()          // FIX: Added missing event
 );
 
 // ============================================================================

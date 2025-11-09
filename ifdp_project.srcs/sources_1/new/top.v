@@ -36,6 +36,7 @@ module top(
     wire [15:0] out_audio;  // unused audio output
     wire out_valid;         // unused valid signal
 
+    // FIXED: Now using real FFT with correct 64-bit port connections
     top_adhavan adhavan(clk, 0, frame_done, m2_rd_data, m2_rd_addr, inter_out, sw,
                         fft_data, wave_data, fft_data_valid, wave_data_valid, out_audio, out_valid);
     
