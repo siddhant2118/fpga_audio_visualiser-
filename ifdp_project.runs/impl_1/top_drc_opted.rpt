@@ -1,8 +1,8 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
-| Date         : Sun Nov  9 15:34:42 2025
-| Host         : RehaanHPVictus running 64-bit major release  (build 9200)
+| Date         : Mon Nov 10 02:23:05 2025
+| Host         : Sid running 64-bit major release  (build 9200)
 | Command      : report_drc -file top_drc_opted.rpt -pb top_drc_opted.pb -rpx top_drc_opted.rpx
 | Design       : top
 | Device       : xc7a35tcpg236-1
@@ -24,13 +24,13 @@ Table of Contents
       Design limits: <entire design considered>
            Ruledeck: default
              Max violations: <unlimited>
-             Violations found: 32
+             Violations found: 17
 +--------+----------+------------------------+------------+
 | Rule   | Severity | Description            | Violations |
 +--------+----------+------------------------+------------+
-| DPIP-1 | Warning  | Input pipelining       | 8          |
-| DPOP-1 | Warning  | PREG Output pipelining | 6          |
-| DPOP-2 | Warning  | MREG Output pipelining | 18         |
+| DPIP-1 | Warning  | Input pipelining       | 7          |
+| DPOP-1 | Warning  | PREG Output pipelining | 5          |
+| DPOP-2 | Warning  | MREG Output pipelining | 5          |
 +--------+----------+------------------------+------------+
 
 2. REPORT DETAILS
@@ -67,11 +67,6 @@ Related violations: <none>
 
 DPIP-1#7 Warning
 Input pipelining  
-DSP rehaan/disp_ctrl/samp_y0 input rehaan/disp_ctrl/samp_y0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
-Related violations: <none>
-
-DPIP-1#8 Warning
-Input pipelining  
 DSP sidu/u_map/prod input sidu/u_map/prod/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
@@ -97,100 +92,30 @@ Related violations: <none>
 
 DPOP-1#5 Warning
 PREG Output pipelining  
-DSP rehaan/disp_ctrl/samp_y0 output rehaan/disp_ctrl/samp_y0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
-Related violations: <none>
-
-DPOP-1#6 Warning
-PREG Output pipelining  
 DSP sidu/u_map/prod output sidu/u_map/prod/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-2#1 Warning
 MREG Output pipelining  
-DSP adhavan/u_fft/stage_128/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg multiplier stage adhavan/u_fft/stage_128/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+DSP manu/u_dc_l/sample_out4 multiplier stage manu/u_dc_l/sample_out4/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
 Related violations: <none>
 
 DPOP-2#2 Warning
 MREG Output pipelining  
-DSP adhavan/u_fft/stage_16/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg multiplier stage adhavan/u_fft/stage_16/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+DSP manu/u_dc_r/sample_out4 multiplier stage manu/u_dc_r/sample_out4/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
 Related violations: <none>
 
 DPOP-2#3 Warning
 MREG Output pipelining  
-DSP adhavan/u_fft/stage_256/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg multiplier stage adhavan/u_fft/stage_256/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+DSP manu/u_ramp_l/sample_out3 multiplier stage manu/u_ramp_l/sample_out3/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
 Related violations: <none>
 
 DPOP-2#4 Warning
 MREG Output pipelining  
-DSP adhavan/u_fft/stage_32/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg multiplier stage adhavan/u_fft/stage_32/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
-Related violations: <none>
-
-DPOP-2#5 Warning
-MREG Output pipelining  
-DSP adhavan/u_fft/stage_64/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg multiplier stage adhavan/u_fft/stage_64/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
-Related violations: <none>
-
-DPOP-2#6 Warning
-MREG Output pipelining  
-DSP adhavan/u_fft/stage_8/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg multiplier stage adhavan/u_fft/stage_8/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
-Related violations: <none>
-
-DPOP-2#7 Warning
-MREG Output pipelining  
-DSP adhavan/u_ifft/stage_128/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg multiplier stage adhavan/u_ifft/stage_128/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
-Related violations: <none>
-
-DPOP-2#8 Warning
-MREG Output pipelining  
-DSP adhavan/u_ifft/stage_16/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg multiplier stage adhavan/u_ifft/stage_16/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
-Related violations: <none>
-
-DPOP-2#9 Warning
-MREG Output pipelining  
-DSP adhavan/u_ifft/stage_256/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg multiplier stage adhavan/u_ifft/stage_256/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
-Related violations: <none>
-
-DPOP-2#10 Warning
-MREG Output pipelining  
-DSP adhavan/u_ifft/stage_32/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg multiplier stage adhavan/u_ifft/stage_32/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
-Related violations: <none>
-
-DPOP-2#11 Warning
-MREG Output pipelining  
-DSP adhavan/u_ifft/stage_64/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg multiplier stage adhavan/u_ifft/stage_64/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
-Related violations: <none>
-
-DPOP-2#12 Warning
-MREG Output pipelining  
-DSP adhavan/u_ifft/stage_8/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg multiplier stage adhavan/u_ifft/stage_8/HWBFLY.bfly/CKPCE_THREE.mpy_pipe_out_reg/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
-Related violations: <none>
-
-DPOP-2#13 Warning
-MREG Output pipelining  
-DSP manu/u_dc_l/sample_out4 multiplier stage manu/u_dc_l/sample_out4/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
-Related violations: <none>
-
-DPOP-2#14 Warning
-MREG Output pipelining  
-DSP manu/u_dc_r/sample_out4 multiplier stage manu/u_dc_r/sample_out4/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
-Related violations: <none>
-
-DPOP-2#15 Warning
-MREG Output pipelining  
-DSP manu/u_ramp_l/sample_out3 multiplier stage manu/u_ramp_l/sample_out3/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
-Related violations: <none>
-
-DPOP-2#16 Warning
-MREG Output pipelining  
 DSP manu/u_ramp_r/sample_out3 multiplier stage manu/u_ramp_r/sample_out3/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
 Related violations: <none>
 
-DPOP-2#17 Warning
-MREG Output pipelining  
-DSP rehaan/disp_ctrl/samp_y0 multiplier stage rehaan/disp_ctrl/samp_y0/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
-Related violations: <none>
-
-DPOP-2#18 Warning
+DPOP-2#5 Warning
 MREG Output pipelining  
 DSP sidu/u_map/prod multiplier stage sidu/u_map/prod/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
 Related violations: <none>

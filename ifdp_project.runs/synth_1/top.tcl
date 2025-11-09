@@ -18,71 +18,66 @@ proc create_report { reportName command } {
   }
 }
 set_param xicom.use_bs_reader 1
+set_msg_config -id {Common 17-41} -limit 10000000
 create_project -in_memory -part xc7a35tcpg236-1
 
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
-set_property webtalk.parent_dir {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.cache/wt} [current_project]
-set_property parent.project_path {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.xpr} [current_project]
+set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
+set_property webtalk.parent_dir C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.cache/wt [current_project]
+set_property parent.project_path C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.xpr [current_project]
 set_property XPM_LIBRARIES XPM_FIFO [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
-set_property ip_output_repo {c:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.cache/ip} [current_project]
+set_property ip_output_repo c:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 read_mem {
-  C:/Users/rehaa/Downloads/fft_forward/cmem_8.hex
-  C:/Users/rehaa/Downloads/fft_forward/cmem_16.hex
-  C:/Users/rehaa/Downloads/fft_forward/cmem_32.hex
-  C:/Users/rehaa/Downloads/fft_forward/cmem_64.hex
-  C:/Users/rehaa/Downloads/fft_forward/cmem_128.hex
-  C:/Users/rehaa/Downloads/fft_forward/cmem_256.hex
-  C:/Users/rehaa/Downloads/fft_inverse/icmem_8.hex
-  C:/Users/rehaa/Downloads/fft_inverse/icmem_16.hex
-  C:/Users/rehaa/Downloads/fft_inverse/icmem_32.hex
-  C:/Users/rehaa/Downloads/fft_inverse/icmem_64.hex
-  C:/Users/rehaa/Downloads/fft_inverse/icmem_128.hex
-  C:/Users/rehaa/Downloads/fft_inverse/icmem_256.hex
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/imports/rehaa/Downloads/fft_forward/cmem_8.hex
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/imports/rehaa/Downloads/fft_forward/cmem_16.hex
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/imports/rehaa/Downloads/fft_forward/cmem_32.hex
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/imports/rehaa/Downloads/fft_forward/cmem_64.hex
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/imports/rehaa/Downloads/fft_forward/cmem_128.hex
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/imports/rehaa/Downloads/fft_forward/cmem_256.hex
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/imports/rehaa/Downloads/fft_inverse/icmem_8.hex
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/imports/rehaa/Downloads/fft_inverse/icmem_16.hex
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/imports/rehaa/Downloads/fft_inverse/icmem_32.hex
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/imports/rehaa/Downloads/fft_inverse/icmem_64.hex
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/imports/rehaa/Downloads/fft_inverse/icmem_128.hex
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/imports/rehaa/Downloads/fft_inverse/icmem_256.hex
 }
 read_verilog -library xil_defaultlib {
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/Audio_Capture.v}
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/Oled_Display.v}
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/audio_bridge_fifo_sync.v}
-  C:/Users/rehaa/Downloads/fft_inverse/bimpy.v
-  C:/Users/rehaa/Downloads/fft_inverse/bitreverse.v
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/bram_frame_buffer.v}
-  C:/Users/rehaa/Downloads/fft_inverse/butterfly.v
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/clk_voice.v}
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/clock_div.v}
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/clock_divider.v}
-  C:/Users/rehaa/Downloads/fft_inverse/convround.v
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/da2_stereo_top.v}
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/data_reader.v}
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/dc_block_hp.v}
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/display_controller.v}
-  C:/Users/rehaa/Downloads/fft_forward/fftmain.v
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/frame_buffer.v}
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/frame_packer.v}
-  C:/Users/rehaa/Downloads/fft_inverse/hwbfly.v
-  C:/Users/rehaa/Downloads/fft_inverse/ifftmain.v
-  C:/Users/rehaa/Downloads/fft_inverse/ifftstage.v
-  C:/Users/rehaa/Downloads/fft_inverse/laststage.v
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/level_0_999.v}
-  C:/Users/rehaa/Downloads/fft_inverse/longbimpy.v
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/pcm16_to_u12.v}
-  C:/Users/rehaa/Downloads/fft_inverse/qtrstage.v
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/seg_scan4.v}
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/seven_segment.v}
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/slow_clock10Hz.v}
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/soft_gain_ramp.v}
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/spi16_dual_da2.v}
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/switch_manager.v}
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/top_adhavan.v}
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/top_manu.v}
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/top_rehaan.v}
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/top_sidu.v}
-  {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/top.v}
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/Audio_Capture.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/Oled_Display.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/audio_bridge_fifo_sync.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/bram_frame_buffer.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/clk_voice.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/clock_div.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/clock_divider.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/da2_stereo_top.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/data_reader.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/dc_block_hp.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/display_controller.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/frame_buffer.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/frame_packer.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/level_0_999.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/pcm16_to_u12.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/seg_scan4.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/seven_segment.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/slow_clock10Hz.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/soft_gain_ramp.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/spi16_dual_da2.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/switch_manager.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/top_adhavan.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/top_manu.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/top_rehaan.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/top_sidu.v
+  C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/new/top.v
 }
+read_ip -quiet c:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/ip/xfft_1/xfft_1.xci
+
+read_ip -quiet c:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/ip/xfft_0/xfft_0.xci
+
 # Mark all dcp files as not used in implementation to prevent them from being
 # stitched into the results of this synthesis run. Any black boxes in the
 # design are intentionally left as such for best results. Dcp files will be
@@ -91,9 +86,11 @@ read_verilog -library xil_defaultlib {
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/constrs_1/new/basys3_constraints.xdc}}
-set_property used_in_implementation false [get_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/constrs_1/new/basys3_constraints.xdc}}]
+read_xdc C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/constrs_1/new/basys3_constraints.xdc
+set_property used_in_implementation false [get_files C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/constrs_1/new/basys3_constraints.xdc]
 
+read_xdc dont_touch.xdc
+set_property used_in_implementation false [get_files dont_touch.xdc]
 set_param ips.enableIPCacheLiteLoad 0
 close [open __synthesis_is_running__ w]
 

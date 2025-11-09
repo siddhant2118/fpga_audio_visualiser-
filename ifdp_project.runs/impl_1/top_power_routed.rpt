@@ -1,8 +1,8 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
-| Date             : Sun Nov  9 15:38:19 2025
-| Host             : RehaanHPVictus running 64-bit major release  (build 9200)
+| Date             : Mon Nov 10 02:24:27 2025
+| Host             : Sid running 64-bit major release  (build 9200)
 | Command          : report_power -file top_power_routed.rpt -pb top_power_summary_routed.pb -rpx top_power_routed.rpx
 | Design           : top
 | Device           : xc7a35tcpg236-1
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.311        |
+| Total On-Chip Power (W)  | 0.132        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.238        |
-| Device Static (W)        | 0.073        |
+| Dynamic (W)              | 0.060        |
+| Device Static (W)        | 0.072        |
 | Effective TJA (C/W)      | 5.0          |
-| Max Ambient (C)          | 83.4         |
-| Junction Temperature (C) | 26.6         |
+| Max Ambient (C)          | 84.3         |
+| Junction Temperature (C) | 25.7         |
 | Confidence Level         | Low          |
 | Setting File             | ---          |
 | Simulation Activity File | ---          |
@@ -52,22 +52,21 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Clocks                   |     0.041 |        3 |       --- |             --- |
-| Slice Logic              |     0.057 |    36703 |       --- |             --- |
-|   LUT as Logic           |     0.044 |    11231 |     20800 |           54.00 |
-|   Register               |     0.005 |    19391 |     41600 |           46.61 |
-|   CARRY4                 |     0.005 |     1461 |      8150 |           17.93 |
-|   LUT as Distributed RAM |     0.002 |      600 |      9600 |            6.25 |
-|   LUT as Shift Register  |    <0.001 |      343 |      9600 |            3.57 |
-|   F7/F8 Muxes            |    <0.001 |      152 |     32600 |            0.47 |
+| Clocks                   |     0.011 |        3 |       --- |             --- |
+| Slice Logic              |     0.013 |    11316 |       --- |             --- |
+|   LUT as Logic           |     0.011 |     4592 |     20800 |           22.08 |
+|   CARRY4                 |    <0.001 |      574 |      8150 |            7.04 |
+|   LUT as Distributed RAM |    <0.001 |       88 |      9600 |            0.92 |
+|   Register               |    <0.001 |     4719 |     41600 |           11.34 |
+|   F7/F8 Muxes            |    <0.001 |       77 |     32600 |            0.24 |
 |   BUFG                   |     0.000 |        3 |        32 |            9.38 |
-|   Others                 |     0.000 |      247 |       --- |             --- |
-| Signals                  |     0.079 |    31073 |       --- |             --- |
-| Block RAM                |     0.032 |     15.5 |        50 |           31.00 |
-| DSPs                     |     0.018 |       18 |        90 |           20.00 |
+|   Others                 |     0.000 |       96 |       --- |             --- |
+| Signals                  |     0.015 |     9811 |       --- |             --- |
+| Block RAM                |     0.007 |      2.5 |        50 |            5.00 |
+| DSPs                     |     0.004 |        5 |        90 |            5.56 |
 | I/O                      |     0.011 |       72 |       106 |           67.92 |
-| Static Power             |     0.073 |          |           |                 |
-| Total                    |     0.311 |          |           |                 |
+| Static Power             |     0.072 |          |           |                 |
+| Total                    |     0.132 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -77,7 +76,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     0.236 |       0.225 |      0.011 |
+| Vccint    |       1.000 |     0.059 |       0.049 |      0.010 |
 | Vccaux    |       1.800 |     0.013 |       0.000 |      0.013 |
 | Vcco33    |       3.300 |     0.004 |       0.003 |      0.001 |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |
@@ -86,7 +85,7 @@ Table of Contents
 | Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |
 | Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |
 | Vccaux_io |       1.800 |     0.000 |       0.000 |      0.000 |
-| Vccbram   |       1.000 |     0.002 |       0.002 |      0.001 |
+| Vccbram   |       1.000 |     0.001 |       0.000 |      0.000 |
 | MGTAVcc   |       1.000 |     0.000 |       0.000 |      0.000 |
 | MGTAVtt   |       1.200 |     0.000 |       0.000 |      0.000 |
 | Vccadc    |       1.800 |     0.020 |       0.000 |      0.020 |
@@ -100,7 +99,7 @@ Table of Contents
 | User Input Data             | Confidence | Details                                                | Action                                                                                                             |
 +-----------------------------+------------+--------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+
 | Design implementation state | High       | Design is routed                                       |                                                                                                                    |
-| Clock nodes activity        | Medium     | More than 5% of clocks are missing user specification  | Provide missing clock activity with a constraint file, simulation results or by editing the "By Clock Domain" view |
+| Clock nodes activity        | Low        | User specified less than 75% of clocks                 | Provide missing clock activity with a constraint file, simulation results or by editing the "By Clock Domain" view |
 | I/O nodes activity          | Low        | More than 75% of inputs are missing user specification | Provide missing input activity with simulation results or by editing the "By Resource Type -> I/Os" view           |
 | Internal nodes activity     | Medium     | User specified less than 25% of internal nodes         | Provide missing internal nodes activity with simulation results or by editing the "By Resource Type" views         |
 | Device models               | High       | Device models are Production                           |                                                                                                                    |
@@ -146,412 +145,58 @@ Table of Contents
 +-------------------------------------------+-----------+
 | Name                                      | Power (W) |
 +-------------------------------------------+-----------+
-| top                                       |     0.238 |
-|   adhavan                                 |     0.166 |
-|     filtered_fft_buffer_reg_0_63_0_2      |    <0.001 |
-|     filtered_fft_buffer_reg_0_63_12_14    |    <0.001 |
-|     filtered_fft_buffer_reg_0_63_15_17    |    <0.001 |
-|     filtered_fft_buffer_reg_0_63_18_20    |    <0.001 |
-|     filtered_fft_buffer_reg_0_63_21_23    |    <0.001 |
-|     filtered_fft_buffer_reg_0_63_24_26    |    <0.001 |
-|     filtered_fft_buffer_reg_0_63_27_29    |    <0.001 |
-|     filtered_fft_buffer_reg_0_63_30_30    |    <0.001 |
-|     filtered_fft_buffer_reg_0_63_31_31    |    <0.001 |
-|     filtered_fft_buffer_reg_0_63_3_5      |    <0.001 |
-|     filtered_fft_buffer_reg_0_63_6_8      |    <0.001 |
-|     filtered_fft_buffer_reg_0_63_9_11     |    <0.001 |
-|     filtered_fft_buffer_reg_128_191_0_2   |    <0.001 |
-|     filtered_fft_buffer_reg_128_191_12_14 |    <0.001 |
-|     filtered_fft_buffer_reg_128_191_15_17 |    <0.001 |
-|     filtered_fft_buffer_reg_128_191_18_20 |    <0.001 |
-|     filtered_fft_buffer_reg_128_191_21_23 |    <0.001 |
-|     filtered_fft_buffer_reg_128_191_24_26 |    <0.001 |
-|     filtered_fft_buffer_reg_128_191_27_29 |    <0.001 |
-|     filtered_fft_buffer_reg_128_191_30_30 |    <0.001 |
-|     filtered_fft_buffer_reg_128_191_31_31 |    <0.001 |
-|     filtered_fft_buffer_reg_128_191_3_5   |    <0.001 |
-|     filtered_fft_buffer_reg_128_191_6_8   |    <0.001 |
-|     filtered_fft_buffer_reg_128_191_9_11  |    <0.001 |
-|     filtered_fft_buffer_reg_192_255_0_2   |    <0.001 |
-|     filtered_fft_buffer_reg_192_255_12_14 |    <0.001 |
-|     filtered_fft_buffer_reg_192_255_15_17 |    <0.001 |
-|     filtered_fft_buffer_reg_192_255_18_20 |    <0.001 |
-|     filtered_fft_buffer_reg_192_255_21_23 |    <0.001 |
-|     filtered_fft_buffer_reg_192_255_24_26 |    <0.001 |
-|     filtered_fft_buffer_reg_192_255_27_29 |    <0.001 |
-|     filtered_fft_buffer_reg_192_255_30_30 |    <0.001 |
-|     filtered_fft_buffer_reg_192_255_31_31 |    <0.001 |
-|     filtered_fft_buffer_reg_192_255_3_5   |    <0.001 |
-|     filtered_fft_buffer_reg_192_255_6_8   |    <0.001 |
-|     filtered_fft_buffer_reg_192_255_9_11  |    <0.001 |
-|     filtered_fft_buffer_reg_64_127_0_2    |    <0.001 |
-|     filtered_fft_buffer_reg_64_127_12_14  |    <0.001 |
-|     filtered_fft_buffer_reg_64_127_15_17  |    <0.001 |
-|     filtered_fft_buffer_reg_64_127_18_20  |    <0.001 |
-|     filtered_fft_buffer_reg_64_127_21_23  |    <0.001 |
-|     filtered_fft_buffer_reg_64_127_24_26  |    <0.001 |
-|     filtered_fft_buffer_reg_64_127_27_29  |    <0.001 |
-|     filtered_fft_buffer_reg_64_127_30_30  |    <0.001 |
-|     filtered_fft_buffer_reg_64_127_31_31  |    <0.001 |
-|     filtered_fft_buffer_reg_64_127_3_5    |    <0.001 |
-|     filtered_fft_buffer_reg_64_127_6_8    |    <0.001 |
-|     filtered_fft_buffer_reg_64_127_9_11   |    <0.001 |
-|     sample_buffer_real_reg_0_63_0_2       |    <0.001 |
-|     sample_buffer_real_reg_0_63_12_14     |    <0.001 |
-|     sample_buffer_real_reg_0_63_15_15     |    <0.001 |
-|     sample_buffer_real_reg_0_63_3_5       |    <0.001 |
-|     sample_buffer_real_reg_0_63_6_8       |    <0.001 |
-|     sample_buffer_real_reg_0_63_9_11      |    <0.001 |
-|     sample_buffer_real_reg_128_191_0_2    |    <0.001 |
-|     sample_buffer_real_reg_128_191_12_14  |    <0.001 |
-|     sample_buffer_real_reg_128_191_15_15  |    <0.001 |
-|     sample_buffer_real_reg_128_191_3_5    |    <0.001 |
-|     sample_buffer_real_reg_128_191_6_8    |    <0.001 |
-|     sample_buffer_real_reg_128_191_9_11   |    <0.001 |
-|     sample_buffer_real_reg_192_255_0_2    |    <0.001 |
-|     sample_buffer_real_reg_192_255_12_14  |    <0.001 |
-|     sample_buffer_real_reg_192_255_15_15  |    <0.001 |
-|     sample_buffer_real_reg_192_255_3_5    |    <0.001 |
-|     sample_buffer_real_reg_192_255_6_8    |    <0.001 |
-|     sample_buffer_real_reg_192_255_9_11   |    <0.001 |
-|     sample_buffer_real_reg_64_127_0_2     |    <0.001 |
-|     sample_buffer_real_reg_64_127_12_14   |    <0.001 |
-|     sample_buffer_real_reg_64_127_15_15   |    <0.001 |
-|     sample_buffer_real_reg_64_127_3_5     |    <0.001 |
-|     sample_buffer_real_reg_64_127_6_8     |    <0.001 |
-|     sample_buffer_real_reg_64_127_9_11    |    <0.001 |
-|     u_fft                                 |     0.083 |
-|       revstage                            |     0.002 |
-|       stage_128                           |     0.014 |
-|         HWBFLY.bfly                       |     0.009 |
-|           do_rnd_left_i                   |    <0.001 |
-|           do_rnd_left_r                   |    <0.001 |
-|           do_rnd_right_i                  |    <0.001 |
-|           do_rnd_right_r                  |    <0.001 |
-|       stage_16                            |     0.012 |
-|         HWBFLY.bfly                       |     0.010 |
-|           do_rnd_left_i                   |    <0.001 |
-|           do_rnd_left_r                   |    <0.001 |
-|           do_rnd_right_i                  |    <0.001 |
-|           do_rnd_right_r                  |    <0.001 |
-|         imem_reg_0_7_0_0                  |    <0.001 |
-|         imem_reg_0_7_10_10                |    <0.001 |
-|         imem_reg_0_7_11_11                |    <0.001 |
-|         imem_reg_0_7_12_12                |    <0.001 |
-|         imem_reg_0_7_13_13                |    <0.001 |
-|         imem_reg_0_7_14_14                |    <0.001 |
-|         imem_reg_0_7_15_15                |    <0.001 |
-|         imem_reg_0_7_16_16                |    <0.001 |
-|         imem_reg_0_7_17_17                |    <0.001 |
-|         imem_reg_0_7_18_18                |    <0.001 |
-|         imem_reg_0_7_19_19                |    <0.001 |
-|         imem_reg_0_7_1_1                  |    <0.001 |
-|         imem_reg_0_7_20_20                |    <0.001 |
-|         imem_reg_0_7_21_21                |    <0.001 |
-|         imem_reg_0_7_22_22                |    <0.001 |
-|         imem_reg_0_7_23_23                |    <0.001 |
-|         imem_reg_0_7_24_24                |    <0.001 |
-|         imem_reg_0_7_25_25                |    <0.001 |
-|         imem_reg_0_7_26_26                |    <0.001 |
-|         imem_reg_0_7_27_27                |    <0.001 |
-|         imem_reg_0_7_28_28                |    <0.001 |
-|         imem_reg_0_7_29_29                |    <0.001 |
-|         imem_reg_0_7_2_2                  |    <0.001 |
-|         imem_reg_0_7_30_30                |    <0.001 |
-|         imem_reg_0_7_31_31                |    <0.001 |
-|         imem_reg_0_7_3_3                  |    <0.001 |
-|         imem_reg_0_7_4_4                  |    <0.001 |
-|         imem_reg_0_7_5_5                  |    <0.001 |
-|         imem_reg_0_7_6_6                  |    <0.001 |
-|         imem_reg_0_7_7_7                  |    <0.001 |
-|         imem_reg_0_7_8_8                  |    <0.001 |
-|         imem_reg_0_7_9_9                  |    <0.001 |
-|         omem_reg_0_7_0_5                  |    <0.001 |
-|         omem_reg_0_7_12_17                |    <0.001 |
-|         omem_reg_0_7_18_23                |    <0.001 |
-|         omem_reg_0_7_24_29                |    <0.001 |
-|         omem_reg_0_7_30_31                |    <0.001 |
-|         omem_reg_0_7_6_11                 |    <0.001 |
-|       stage_2                             |     0.001 |
-|         do_rnd_i                          |    <0.001 |
-|         do_rnd_r                          |    <0.001 |
-|       stage_256                           |     0.014 |
-|         HWBFLY.bfly                       |     0.008 |
-|           do_rnd_left_i                   |    <0.001 |
-|           do_rnd_left_r                   |    <0.001 |
-|           do_rnd_right_i                  |    <0.001 |
-|           do_rnd_right_r                  |    <0.001 |
-|       stage_32                            |     0.011 |
-|         HWBFLY.bfly                       |     0.010 |
-|           do_rnd_left_i                   |    <0.001 |
-|           do_rnd_left_r                   |    <0.001 |
-|           do_rnd_right_i                  |    <0.001 |
-|           do_rnd_right_r                  |    <0.001 |
-|         imem_reg_0_15_0_0                 |    <0.001 |
-|         imem_reg_0_15_10_10               |    <0.001 |
-|         imem_reg_0_15_11_11               |    <0.001 |
-|         imem_reg_0_15_12_12               |    <0.001 |
-|         imem_reg_0_15_13_13               |    <0.001 |
-|         imem_reg_0_15_14_14               |    <0.001 |
-|         imem_reg_0_15_15_15               |    <0.001 |
-|         imem_reg_0_15_16_16               |    <0.001 |
-|         imem_reg_0_15_17_17               |    <0.001 |
-|         imem_reg_0_15_18_18               |    <0.001 |
-|         imem_reg_0_15_19_19               |    <0.001 |
-|         imem_reg_0_15_1_1                 |    <0.001 |
-|         imem_reg_0_15_20_20               |    <0.001 |
-|         imem_reg_0_15_21_21               |    <0.001 |
-|         imem_reg_0_15_22_22               |    <0.001 |
-|         imem_reg_0_15_23_23               |    <0.001 |
-|         imem_reg_0_15_24_24               |    <0.001 |
-|         imem_reg_0_15_25_25               |    <0.001 |
-|         imem_reg_0_15_26_26               |    <0.001 |
-|         imem_reg_0_15_27_27               |    <0.001 |
-|         imem_reg_0_15_28_28               |    <0.001 |
-|         imem_reg_0_15_29_29               |    <0.001 |
-|         imem_reg_0_15_2_2                 |    <0.001 |
-|         imem_reg_0_15_30_30               |    <0.001 |
-|         imem_reg_0_15_31_31               |    <0.001 |
-|         imem_reg_0_15_3_3                 |    <0.001 |
-|         imem_reg_0_15_4_4                 |    <0.001 |
-|         imem_reg_0_15_5_5                 |    <0.001 |
-|         imem_reg_0_15_6_6                 |    <0.001 |
-|         imem_reg_0_15_7_7                 |    <0.001 |
-|         imem_reg_0_15_8_8                 |    <0.001 |
-|         imem_reg_0_15_9_9                 |    <0.001 |
-|         omem_reg_0_15_0_5                 |    <0.001 |
-|         omem_reg_0_15_12_17               |    <0.001 |
-|         omem_reg_0_15_18_23               |    <0.001 |
-|         omem_reg_0_15_24_29               |    <0.001 |
-|         omem_reg_0_15_30_31               |    <0.001 |
-|         omem_reg_0_15_6_11                |    <0.001 |
-|       stage_4                             |     0.004 |
-|         do_rnd_diff_i                     |    <0.001 |
-|         do_rnd_diff_r                     |    <0.001 |
-|         do_rnd_sum_i                      |    <0.001 |
-|         do_rnd_sum_r                      |    <0.001 |
-|       stage_64                            |     0.014 |
-|         HWBFLY.bfly                       |     0.009 |
-|           do_rnd_left_i                   |    <0.001 |
-|           do_rnd_left_r                   |    <0.001 |
-|           do_rnd_right_i                  |    <0.001 |
-|           do_rnd_right_r                  |    <0.001 |
-|       stage_8                             |     0.011 |
-|         HWBFLY.bfly                       |     0.009 |
-|           do_rnd_left_i                   |    <0.001 |
-|           do_rnd_left_r                   |    <0.001 |
-|           do_rnd_right_i                  |    <0.001 |
-|           do_rnd_right_r                  |    <0.001 |
-|         imem_reg_0_3_0_0                  |    <0.001 |
-|         imem_reg_0_3_10_10                |    <0.001 |
-|         imem_reg_0_3_11_11                |    <0.001 |
-|         imem_reg_0_3_12_12                |    <0.001 |
-|         imem_reg_0_3_13_13                |    <0.001 |
-|         imem_reg_0_3_14_14                |    <0.001 |
-|         imem_reg_0_3_15_15                |    <0.001 |
-|         imem_reg_0_3_16_16                |    <0.001 |
-|         imem_reg_0_3_17_17                |    <0.001 |
-|         imem_reg_0_3_18_18                |    <0.001 |
-|         imem_reg_0_3_19_19                |    <0.001 |
-|         imem_reg_0_3_1_1                  |    <0.001 |
-|         imem_reg_0_3_20_20                |    <0.001 |
-|         imem_reg_0_3_21_21                |    <0.001 |
-|         imem_reg_0_3_22_22                |    <0.001 |
-|         imem_reg_0_3_23_23                |    <0.001 |
-|         imem_reg_0_3_24_24                |    <0.001 |
-|         imem_reg_0_3_25_25                |    <0.001 |
-|         imem_reg_0_3_26_26                |    <0.001 |
-|         imem_reg_0_3_27_27                |    <0.001 |
-|         imem_reg_0_3_28_28                |    <0.001 |
-|         imem_reg_0_3_29_29                |    <0.001 |
-|         imem_reg_0_3_2_2                  |    <0.001 |
-|         imem_reg_0_3_30_30                |    <0.001 |
-|         imem_reg_0_3_31_31                |    <0.001 |
-|         imem_reg_0_3_3_3                  |    <0.001 |
-|         imem_reg_0_3_4_4                  |    <0.001 |
-|         imem_reg_0_3_5_5                  |    <0.001 |
-|         imem_reg_0_3_6_6                  |    <0.001 |
-|         imem_reg_0_3_7_7                  |    <0.001 |
-|         imem_reg_0_3_8_8                  |    <0.001 |
-|         imem_reg_0_3_9_9                  |    <0.001 |
-|         omem_reg_0_3_0_5                  |    <0.001 |
-|         omem_reg_0_3_12_17                |    <0.001 |
-|         omem_reg_0_3_18_23                |    <0.001 |
-|         omem_reg_0_3_24_29                |    <0.001 |
-|         omem_reg_0_3_30_31                |    <0.001 |
-|         omem_reg_0_3_6_11                 |    <0.001 |
-|     u_ifft                                |     0.076 |
-|       revstage                            |     0.002 |
-|       stage_128                           |     0.013 |
-|         HWBFLY.bfly                       |     0.008 |
-|           do_rnd_left_i                   |    <0.001 |
-|           do_rnd_left_r                   |    <0.001 |
-|           do_rnd_right_i                  |    <0.001 |
-|           do_rnd_right_r                  |    <0.001 |
-|       stage_16                            |     0.011 |
-|         HWBFLY.bfly                       |     0.009 |
-|           do_rnd_left_i                   |    <0.001 |
-|           do_rnd_left_r                   |    <0.001 |
-|           do_rnd_right_i                  |    <0.001 |
-|           do_rnd_right_r                  |    <0.001 |
-|         imem_reg_0_7_0_0                  |    <0.001 |
-|         imem_reg_0_7_10_10                |    <0.001 |
-|         imem_reg_0_7_11_11                |    <0.001 |
-|         imem_reg_0_7_12_12                |    <0.001 |
-|         imem_reg_0_7_13_13                |    <0.001 |
-|         imem_reg_0_7_14_14                |    <0.001 |
-|         imem_reg_0_7_15_15                |    <0.001 |
-|         imem_reg_0_7_16_16                |    <0.001 |
-|         imem_reg_0_7_17_17                |    <0.001 |
-|         imem_reg_0_7_18_18                |    <0.001 |
-|         imem_reg_0_7_19_19                |    <0.001 |
-|         imem_reg_0_7_1_1                  |    <0.001 |
-|         imem_reg_0_7_20_20                |    <0.001 |
-|         imem_reg_0_7_21_21                |    <0.001 |
-|         imem_reg_0_7_22_22                |    <0.001 |
-|         imem_reg_0_7_23_23                |    <0.001 |
-|         imem_reg_0_7_24_24                |    <0.001 |
-|         imem_reg_0_7_25_25                |    <0.001 |
-|         imem_reg_0_7_26_26                |    <0.001 |
-|         imem_reg_0_7_27_27                |    <0.001 |
-|         imem_reg_0_7_28_28                |    <0.001 |
-|         imem_reg_0_7_29_29                |    <0.001 |
-|         imem_reg_0_7_2_2                  |    <0.001 |
-|         imem_reg_0_7_30_30                |    <0.001 |
-|         imem_reg_0_7_31_31                |    <0.001 |
-|         imem_reg_0_7_3_3                  |    <0.001 |
-|         imem_reg_0_7_4_4                  |    <0.001 |
-|         imem_reg_0_7_5_5                  |    <0.001 |
-|         imem_reg_0_7_6_6                  |    <0.001 |
-|         imem_reg_0_7_7_7                  |    <0.001 |
-|         imem_reg_0_7_8_8                  |    <0.001 |
-|         imem_reg_0_7_9_9                  |    <0.001 |
-|         omem_reg_0_7_0_5                  |    <0.001 |
-|         omem_reg_0_7_12_17                |    <0.001 |
-|         omem_reg_0_7_18_23                |    <0.001 |
-|         omem_reg_0_7_24_29                |    <0.001 |
-|         omem_reg_0_7_30_31                |    <0.001 |
-|         omem_reg_0_7_6_11                 |    <0.001 |
-|       stage_2                             |     0.001 |
-|         do_rnd_i                          |    <0.001 |
-|         do_rnd_r                          |    <0.001 |
-|       stage_256                           |     0.013 |
-|         HWBFLY.bfly                       |     0.008 |
-|           do_rnd_left_i                   |    <0.001 |
-|           do_rnd_left_r                   |    <0.001 |
-|           do_rnd_right_i                  |    <0.001 |
-|           do_rnd_right_r                  |    <0.001 |
-|       stage_32                            |     0.010 |
-|         HWBFLY.bfly                       |     0.009 |
-|           do_rnd_left_i                   |    <0.001 |
-|           do_rnd_left_r                   |    <0.001 |
-|           do_rnd_right_i                  |    <0.001 |
-|           do_rnd_right_r                  |    <0.001 |
-|         imem_reg_0_15_0_0                 |    <0.001 |
-|         imem_reg_0_15_10_10               |    <0.001 |
-|         imem_reg_0_15_11_11               |    <0.001 |
-|         imem_reg_0_15_12_12               |    <0.001 |
-|         imem_reg_0_15_13_13               |    <0.001 |
-|         imem_reg_0_15_14_14               |    <0.001 |
-|         imem_reg_0_15_15_15               |    <0.001 |
-|         imem_reg_0_15_16_16               |    <0.001 |
-|         imem_reg_0_15_17_17               |    <0.001 |
-|         imem_reg_0_15_18_18               |    <0.001 |
-|         imem_reg_0_15_19_19               |    <0.001 |
-|         imem_reg_0_15_1_1                 |    <0.001 |
-|         imem_reg_0_15_20_20               |    <0.001 |
-|         imem_reg_0_15_21_21               |    <0.001 |
-|         imem_reg_0_15_22_22               |    <0.001 |
-|         imem_reg_0_15_23_23               |    <0.001 |
-|         imem_reg_0_15_24_24               |    <0.001 |
-|         imem_reg_0_15_25_25               |    <0.001 |
-|         imem_reg_0_15_26_26               |    <0.001 |
-|         imem_reg_0_15_27_27               |    <0.001 |
-|         imem_reg_0_15_28_28               |    <0.001 |
-|         imem_reg_0_15_29_29               |    <0.001 |
-|         imem_reg_0_15_2_2                 |    <0.001 |
-|         imem_reg_0_15_30_30               |    <0.001 |
-|         imem_reg_0_15_31_31               |    <0.001 |
-|         imem_reg_0_15_3_3                 |    <0.001 |
-|         imem_reg_0_15_4_4                 |    <0.001 |
-|         imem_reg_0_15_5_5                 |    <0.001 |
-|         imem_reg_0_15_6_6                 |    <0.001 |
-|         imem_reg_0_15_7_7                 |    <0.001 |
-|         imem_reg_0_15_8_8                 |    <0.001 |
-|         imem_reg_0_15_9_9                 |    <0.001 |
-|         omem_reg_0_15_0_5                 |    <0.001 |
-|         omem_reg_0_15_12_17               |    <0.001 |
-|         omem_reg_0_15_18_23               |    <0.001 |
-|         omem_reg_0_15_24_29               |    <0.001 |
-|         omem_reg_0_15_30_31               |    <0.001 |
-|         omem_reg_0_15_6_11                |    <0.001 |
-|       stage_4                             |     0.003 |
-|         do_rnd_diff_i                     |    <0.001 |
-|         do_rnd_diff_r                     |    <0.001 |
-|         do_rnd_sum_i                      |    <0.001 |
-|         do_rnd_sum_r                      |    <0.001 |
-|       stage_64                            |     0.013 |
-|         HWBFLY.bfly                       |     0.008 |
-|           do_rnd_left_i                   |    <0.001 |
-|           do_rnd_left_r                   |    <0.001 |
-|           do_rnd_right_i                  |    <0.001 |
-|           do_rnd_right_r                  |    <0.001 |
-|       stage_8                             |     0.010 |
-|         HWBFLY.bfly                       |     0.009 |
-|           do_rnd_left_i                   |    <0.001 |
-|           do_rnd_left_r                   |    <0.001 |
-|           do_rnd_right_i                  |    <0.001 |
-|           do_rnd_right_r                  |    <0.001 |
-|         imem_reg_0_3_0_0                  |    <0.001 |
-|         imem_reg_0_3_10_10                |    <0.001 |
-|         imem_reg_0_3_11_11                |    <0.001 |
-|         imem_reg_0_3_12_12                |    <0.001 |
-|         imem_reg_0_3_13_13                |    <0.001 |
-|         imem_reg_0_3_14_14                |    <0.001 |
-|         imem_reg_0_3_15_15                |    <0.001 |
-|         imem_reg_0_3_16_16                |    <0.001 |
-|         imem_reg_0_3_17_17                |    <0.001 |
-|         imem_reg_0_3_18_18                |    <0.001 |
-|         imem_reg_0_3_19_19                |    <0.001 |
-|         imem_reg_0_3_1_1                  |    <0.001 |
-|         imem_reg_0_3_20_20                |    <0.001 |
-|         imem_reg_0_3_21_21                |    <0.001 |
-|         imem_reg_0_3_22_22                |    <0.001 |
-|         imem_reg_0_3_23_23                |    <0.001 |
-|         imem_reg_0_3_24_24                |    <0.001 |
-|         imem_reg_0_3_25_25                |    <0.001 |
-|         imem_reg_0_3_26_26                |    <0.001 |
-|         imem_reg_0_3_27_27                |    <0.001 |
-|         imem_reg_0_3_28_28                |    <0.001 |
-|         imem_reg_0_3_29_29                |    <0.001 |
-|         imem_reg_0_3_2_2                  |    <0.001 |
-|         imem_reg_0_3_30_30                |    <0.001 |
-|         imem_reg_0_3_31_31                |    <0.001 |
-|         imem_reg_0_3_3_3                  |    <0.001 |
-|         imem_reg_0_3_4_4                  |    <0.001 |
-|         imem_reg_0_3_5_5                  |    <0.001 |
-|         imem_reg_0_3_6_6                  |    <0.001 |
-|         imem_reg_0_3_7_7                  |    <0.001 |
-|         imem_reg_0_3_8_8                  |    <0.001 |
-|         imem_reg_0_3_9_9                  |    <0.001 |
-|         omem_reg_0_3_0_5                  |    <0.001 |
-|         omem_reg_0_3_12_17                |    <0.001 |
-|         omem_reg_0_3_18_23                |    <0.001 |
-|         omem_reg_0_3_24_29                |    <0.001 |
-|         omem_reg_0_3_30_31                |    <0.001 |
-|         omem_reg_0_3_6_11                 |    <0.001 |
-|   manu                                    |     0.013 |
-|     g_fifo.u_bridge                       |     0.001 |
-|       u_fifo                              |     0.001 |
-|         xpm_fifo_base_inst                |     0.001 |
-|           gen_sdpram.xpm_memory_base_inst |    <0.001 |
+| top                                       |     0.060 |
+|   adhavan                                 |     0.007 |
+|     forward_fft                           |    <0.001 |
+|       U0                                  |    <0.001 |
+|         i_synth                           |    <0.001 |
+|           axi_wrapper                     |    <0.001 |
+|             data_out_channel              |    <0.001 |
+|               gen_non_real_time.fifo      |    <0.001 |
+|                 fifo0                     |    <0.001 |
+|     inverse_fft                           |    <0.001 |
+|       U0                                  |    <0.001 |
+|         i_synth                           |    <0.001 |
+|           axi_wrapper                     |    <0.001 |
+|             data_out_channel              |    <0.001 |
+|               gen_non_real_time.fifo      |    <0.001 |
+|                 fifo0                     |    <0.001 |
+|     sample_buffer_reg_0_63_0_2            |    <0.001 |
+|     sample_buffer_reg_0_63_12_14          |    <0.001 |
+|     sample_buffer_reg_0_63_15_15          |    <0.001 |
+|     sample_buffer_reg_0_63_3_5            |    <0.001 |
+|     sample_buffer_reg_0_63_6_8            |    <0.001 |
+|     sample_buffer_reg_0_63_9_11           |    <0.001 |
+|     sample_buffer_reg_128_191_0_2         |    <0.001 |
+|     sample_buffer_reg_128_191_12_14       |    <0.001 |
+|     sample_buffer_reg_128_191_15_15       |    <0.001 |
+|     sample_buffer_reg_128_191_3_5         |    <0.001 |
+|     sample_buffer_reg_128_191_6_8         |    <0.001 |
+|     sample_buffer_reg_128_191_9_11        |    <0.001 |
+|     sample_buffer_reg_192_255_0_2         |    <0.001 |
+|     sample_buffer_reg_192_255_12_14       |    <0.001 |
+|     sample_buffer_reg_192_255_15_15       |    <0.001 |
+|     sample_buffer_reg_192_255_3_5         |    <0.001 |
+|     sample_buffer_reg_192_255_6_8         |    <0.001 |
+|     sample_buffer_reg_192_255_9_11        |    <0.001 |
+|     sample_buffer_reg_64_127_0_2          |    <0.001 |
+|     sample_buffer_reg_64_127_12_14        |    <0.001 |
+|     sample_buffer_reg_64_127_15_15        |    <0.001 |
+|     sample_buffer_reg_64_127_3_5          |    <0.001 |
+|     sample_buffer_reg_64_127_6_8          |    <0.001 |
+|     sample_buffer_reg_64_127_9_11         |    <0.001 |
+|   manu                                    |     0.014 |
+|     g_fifo.u_bridge                       |     0.002 |
+|       u_fifo                              |     0.002 |
+|         xpm_fifo_base_inst                |     0.002 |
+|           gen_sdpram.xpm_memory_base_inst |     0.001 |
 |           rdp_inst                        |    <0.001 |
 |           rdpp1_inst                      |    <0.001 |
 |           rst_d1_inst                     |    <0.001 |
 |           wrp_inst                        |    <0.001 |
 |           wrpp1_inst                      |    <0.001 |
 |           xpm_fifo_rst_inst               |    <0.001 |
-|     u_da2                                 |    <0.001 |
+|     u_da2                                 |     0.001 |
 |       u_conv_l                            |    <0.001 |
 |       u_conv_r                            |    <0.001 |
 |       u_nco                               |    <0.001 |
@@ -560,7 +205,7 @@ Table of Contents
 |     u_dc_r                                |     0.002 |
 |     u_ramp_l                              |     0.003 |
 |     u_ramp_r                              |     0.003 |
-|   rehaan                                  |     0.044 |
+|   rehaan                                  |     0.025 |
 |     clk1                                  |    <0.001 |
 |     clk2                                  |    <0.001 |
 |     disp_ctrl                             |    <0.001 |
@@ -571,9 +216,9 @@ Table of Contents
 |     oledA                                 |    <0.001 |
 |     oledB                                 |    <0.001 |
 |     swman                                 |    <0.001 |
-|     wave_reader                           |     0.040 |
+|     wave_reader                           |     0.020 |
 |   sidu                                    |     0.003 |
-|     u_bram                                |     0.001 |
+|     u_bram                                |     0.002 |
 |     u_cap                                 |    <0.001 |
 |     u_cs                                  |    <0.001 |
 |     u_map                                 |    <0.001 |

@@ -11,7 +11,7 @@
 <MemInfo Version="1" Minor="5">
   <MemoryArray InstPath="manu/g_fifo.u_bridge/u_fifo/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst" MemoryPrimitive="block" MemoryConfiguration="enabled_configuration">
     <MemoryLayout Name="manu/g_fifo.u_bridge/u_fifo/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst" CoreMemory_Width="32" MemoryType="RAM_SDP">
-      <BRAM MemType="RAMB36" Placement="X1Y11">
+      <BRAM MemType="RAMB36" Placement="X1Y2">
         <DataWidth_PortA MSB="31" LSB="0"/>
         <AddressRange_PortA Begin="0" End="1023"/>
         <BitLayout_PortA pattern="p0_d32"/>

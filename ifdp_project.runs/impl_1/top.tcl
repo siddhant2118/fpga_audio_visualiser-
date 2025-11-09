@@ -60,6 +60,7 @@ proc step_failed { step } {
   close $ch
 }
 
+set_msg_config -id {Common 17-41} -limit 10000000
 
 start_step init_design
 set ACTIVE_STEP init_design
@@ -69,13 +70,15 @@ set rc [catch {
   create_project -in_memory -part xc7a35tcpg236-1
   set_property design_mode GateLvl [current_fileset]
   set_param project.singleFileAddWarning.threshold 0
-  set_property webtalk.parent_dir {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.cache/wt} [current_project]
-  set_property parent.project_path {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.xpr} [current_project]
-  set_property ip_output_repo {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.cache/ip}} [current_project]
+  set_property webtalk.parent_dir C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.cache/wt [current_project]
+  set_property parent.project_path C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.xpr [current_project]
+  set_property ip_output_repo C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
   set_property XPM_LIBRARIES XPM_FIFO [current_project]
-  add_files -quiet {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.runs/synth_1/top.dcp}}
-  read_xdc {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/constrs_1/new/basys3_constraints.xdc}}
+  add_files -quiet C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.runs/synth_1/top.dcp
+  read_ip -quiet c:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/ip/xfft_1/xfft_1.xci
+  read_ip -quiet c:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/sources_1/ip/xfft_0/xfft_0.xci
+  read_xdc C:/Users/siddh/FINALTEST/fpga_audio_visualiser-/ifdp_project.srcs/constrs_1/new/basys3_constraints.xdc
   link_design -top top -part xc7a35tcpg236-1
   write_hwdef -force -file top.hwdef
   close_msg_db -file init_design.pb

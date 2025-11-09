@@ -1,0 +1,290 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Sun Nov  9 07:11:27 2025
+# Process ID: 34444
+# Current directory: C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent41488 C:\Users\rehaa\OneDrive\Documents\NUS\Semester 3\EE2026\Project\ifdp_project\ifdp_project.xpr
+# Log file: C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/vivado.log
+# Journal file: C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.xpr}
+update_compile_order -fileset sources_1
+close [ open {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/frame_buffer.v} w ]
+add_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/frame_buffer.v}}
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+open_project C:/Users/rehaa/fft_please_work/fft_please_work.xpr
+update_compile_order -fileset sources_1
+current_project ifdp_project
+current_project fft_please_work
+current_project ifdp_project
+close [ open {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/bimpy.v} w ]
+add_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/bimpy.v}}
+close [ open {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/hwbfly.v} w ]
+add_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/hwbfly.v}}
+close [ open {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/top_adhavan.v} w ]
+add_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/top_adhavan.v}}
+close [ open {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/ifftmain.v} w ]
+add_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/ifftmain.v}}
+close [ open {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/ifftstage.v} w ]
+add_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/ifftstage.v}}
+close [ open {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/qtrstage.v} w ]
+add_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/qtrstage.v}}
+close [ open {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/bitreverse.v} w ]
+add_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/bitreverse.v}}
+close [ open {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/convround.v} w ]
+add_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/convround.v}}
+close [ open {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/butterfly.v} w ]
+add_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/butterfly.v}}
+close [ open {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/laststage.v} w ]
+add_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/laststage.v}}
+close [ open {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/longbimpy.v} w ]
+add_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/longbimpy.v}}
+close [ open {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/fftmain.v} w ]
+add_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/fftmain.v}}
+update_compile_order -fileset sources_1
+current_project fft_please_work
+current_project ifdp_project
+current_project fft_please_work
+current_project ifdp_project
+current_project fft_please_work
+current_project ifdp_project
+current_project fft_please_work
+current_project ifdp_project
+current_project fft_please_work
+current_project ifdp_project
+current_project fft_please_work
+current_project ifdp_project
+current_project fft_please_work
+current_project ifdp_project
+current_project fft_please_work
+current_project ifdp_project
+current_project fft_please_work
+current_project ifdp_project
+update_compile_order -fileset sources_1
+close [ open {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/data_reader.v} w ]
+add_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/data_reader.v}}
+update_compile_order -fileset sources_1
+close [ open {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/audio_bridge_fifo_sync.v} w ]
+add_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/audio_bridge_fifo_sync.v}}
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+export_ip_user_files -of_objects  [get_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/audio_bridge_fifo.v}}] -no_script -reset -force -quiet
+remove_files  {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/audio_bridge_fifo.v}}
+file delete -force {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/audio_bridge_fifo.v}
+export_ip_user_files -of_objects  [get_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/async_fifo.v}}] -no_script -reset -force -quiet
+remove_files  {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/async_fifo.v}}
+file delete -force {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/async_fifo.v}
+update_compile_order -fileset sources_1
+current_project fft_please_work
+current_project ifdp_project
+add_files -norecurse -fileset sources_1 "C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_8.hex"
+C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_16.hex
+current_project fft_please_work
+current_project ifdp_project
+add_files -norecurse -fileset sources_1 "C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_16.hex"
+add_files -norecurse -fileset sources_1 "C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_32.hex"
+add_files -norecurse -fileset sources_1 "C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_64.hex"
+add_files -norecurse -fileset sources_1 "C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_128.hex"
+add_files -norecurse -fileset sources_1 "C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_256.hex"
+add_files -norecurse -fileset sources_1 "C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_8.hex"
+add_files -norecurse -fileset sources_1 "C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_16.hex"
+add_files -norecurse -fileset sources_1 "C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_32.hex"
+add_files -norecurse -fileset sources_1 "C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_64.hex"
+add_files -norecurse -fileset sources_1 "C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_128.hex"
+add_files -norecurse -fileset sources_1 "C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_256.hex"
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_8.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_64.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_32.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_256.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_16.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_128.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_8.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_64.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_32.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_256.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_16.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_128.hex]
+current_project fft_please_work
+close_project
+launch_runs impl_1 -to_step write_bitstream -jobs 14
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 14
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 14
+wait_on_run impl_1
+open_hw
+connect_hw_server
+open_hw_target
+set_property PROGRAM.FILE {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.runs/impl_1/top.bit} [get_hw_devices xc7a35t_0]
+current_hw_device [get_hw_devices xc7a35t_0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7a35t_0] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7a35t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a35t_0]
+set_property PROGRAM.FILE {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.runs/impl_1/top.bit} [get_hw_devices xc7a35t_0]
+program_hw_devices [get_hw_devices xc7a35t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a35t_0] 0]
+close_hw
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_128.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_16.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_256.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_32.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_64.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_8.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_128.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_16.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_256.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_32.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_64.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_8.hex]
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 14
+wait_on_run impl_1
+archive_project C:/Users/rehaa/Downloads/ifdp_project.xpr.zip -temp_dir {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/.Xil/Vivado-34444-RehaanHPVictus} -force -include_local_ip_cache -include_config_settings
+report_utilization -hierarchical
+open_run synth_1 -name synth_1
+report_utilization -hierarchical
+close_design
+export_ip_user_files -of_objects  [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_256.hex] -no_script -reset -force -quiet
+remove_files  C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_256.hex
+export_ip_user_files -of_objects  [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_8.hex] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_16.hex] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_32.hex] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_64.hex] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_128.hex] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_8.hex] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_16.hex] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_32.hex] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_64.hex] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_128.hex] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_256.hex] -no_script -reset -force -quiet
+remove_files  {C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_8.hex C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_16.hex C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_32.hex C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_64.hex C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/icmem_128.hex C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_8.hex C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_16.hex C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_32.hex C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_64.hex C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_128.hex C:/Users/rehaa/fft_please_work/fft_please_work.srcs/sources_1/imports/rom/cmem_256.hex}
+export_ip_user_files -of_objects  [get_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/bimpy.v}}] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/bitreverse.v}}] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/butterfly.v}}] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/convround.v}}] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/fftmain.v}}] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/hwbfly.v}}] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/ifftmain.v}}] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/ifftstage.v}}] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/longbimpy.v}}] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/qtrstage.v}}] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/laststage.v}}] -no_script -reset -force -quiet
+remove_files  {{C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/bimpy.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/bitreverse.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/butterfly.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/convround.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/fftmain.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/hwbfly.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/ifftmain.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/ifftstage.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/longbimpy.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/qtrstage.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/laststage.v}}
+file delete -force {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/bimpy.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/bitreverse.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/butterfly.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/convround.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/fftmain.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/hwbfly.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/ifftmain.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/ifftstage.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/longbimpy.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/qtrstage.v} {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.srcs/sources_1/new/laststage.v}
+add_files -norecurse {C:/Users/rehaa/Downloads/fft_forward/longbimpy.v C:/Users/rehaa/Downloads/fft_inverse/bimpy.v C:/Users/rehaa/Downloads/fft_inverse/hwbfly.v C:/Users/rehaa/Downloads/fft_inverse/ifftmain.v C:/Users/rehaa/Downloads/fft_forward/bimpy.v C:/Users/rehaa/Downloads/fft_inverse/ifftstage.v C:/Users/rehaa/Downloads/fft_forward/bitreverse.v C:/Users/rehaa/Downloads/fft_forward/butterfly.v C:/Users/rehaa/Downloads/fft_forward/convround.v C:/Users/rehaa/Downloads/fft_inverse/qtrstage.v C:/Users/rehaa/Downloads/fft_forward/laststage.v C:/Users/rehaa/Downloads/fft_forward/qtrstage.v C:/Users/rehaa/Downloads/fft_inverse/bitreverse.v C:/Users/rehaa/Downloads/fft_forward/hwbfly.v C:/Users/rehaa/Downloads/fft_inverse/laststage.v C:/Users/rehaa/Downloads/fft_forward/fftmain.v C:/Users/rehaa/Downloads/fft_forward/fftstage.v C:/Users/rehaa/Downloads/fft_inverse/butterfly.v C:/Users/rehaa/Downloads/fft_inverse/convround.v C:/Users/rehaa/Downloads/fft_inverse/longbimpy.v}
+update_compile_order -fileset sources_1
+add_files -norecurse C:/Users/rehaa/Downloads/fft_forward/fftstage.v
+add_files -norecurse -fileset sources_1 "C:\Users\rehaa\Downloads\fft_forward\cmem_8.hex"
+add_files -norecurse -fileset sources_l "C://Users/rehaa/Downloads/fft_forward/cmem_8.hex"
+add_files -norecurse -fileset sources_1 "C:\Users\rehaa\Downloads\fft_forward\cmem_8.hex"
+add_files -norecurse -fileset sources_1 "C://Users/rehaa/Downloads/fft_forward/cmem_8.hex"
+add_files -norecurse -fileset sources_1 "C://Users/rehaa/Downloads/fft_forward/cmem_16.hex"
+add_files -norecurse -fileset sources_1 "C://Users/rehaa/Downloads/fft_forward/cmem_32.hex"
+add_files -norecurse -fileset sources_1 "C://Users/rehaa/Downloads/fft_forward/cmem_64.hex"
+add_files -norecurse -fileset sources_1 "C://Users/rehaa/Downloads/fft_forward/cmem_128.hex"
+add_files -norecurse -fileset sources_1 "C://Users/rehaa/Downloads/fft_forward/cmem_256.hex"
+add_files -norecurse -fileset sources_1 "C://Users/rehaa/Downloads/fft_inverse/icmem_8.hex"
+add_files -norecurse -fileset sources_1 "C://Users/rehaa/Downloads/fft_inverse/icmem_16.hex"
+add_files -norecurse -fileset sources_1 "C://Users/rehaa/Downloads/fft_inverse/icmem_32.hex"
+add_files -norecurse -fileset sources_1 "C://Users/rehaa/Downloads/fft_inverse/icmem_64.hex"
+add_files -norecurse -fileset sources_1 "C://Users/rehaa/Downloads/fft_inverse/icmem_128.hex"
+add_files -norecurse -fileset sources_1 "C://Users/rehaa/Downloads/fft_inverse/icmem_256.hex"
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_256.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_256.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_8.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_8.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_16.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_16.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_32.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_32.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_64.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_64.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_128.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_128.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_256.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_256.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_8.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_8.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_8.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_16.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_16.hex]
+set_property USED_IN {synthesis simulation out_of_context opt_design power_opt_design place_design phys_opt_design route_design write_bitstream write_bitstream_post synth_blackbox_stub testbench board single_language hw_handoff synthesis_post opt_design_post power_opt_design_post place_design_post phys_opt_design_post route_design_post c_source converted_rtl structural hls ipsharedlogic ipstatic iptraffic ipir ipchannel ipconstraint ipgraph} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_16.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_16.hex]
+set_property USED_IN {} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_32.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_32.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_32.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_128.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_128.hex]
+set_property FILE_TYPE {Memory File} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_64.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_64.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_8.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_16.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_32.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_64.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_128.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_128.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_128.hex]
+set_property USED_IN {synthesis simulation out_of_context opt_design power_opt_design place_design phys_opt_design route_design write_bitstream write_bitstream_post synth_blackbox_stub testbench board single_language hw_handoff synthesis_post opt_design_post power_opt_design_post place_design_post phys_opt_design_post route_design_post c_source converted_rtl structural hls ipsharedlogic ipstatic iptraffic ipir ipchannel ipconstraint ipgraph} [get_files C:/Users/rehaa/Downloads/fft_forward/cmem_256.hex]
+set_property USED_IN {board c_source converted_rtl hls hw_handoff implementation ipchannel ipconstraint ipgraph ipir ipsharedlogic ipstatic iptraffic opt_design opt_design_post out_of_context phys_opt_design phys_opt_design_post place_design place_design_post power_opt_design power_opt_design_post route_design route_design_post simulation single_language structural synth_blackbox_stub synthesis synthesis_post testbench write_bitstream write_bitstream_post} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_8.hex]
+set_property USED_IN {synthesis simulation out_of_context opt_design power_opt_design place_design phys_opt_design route_design write_bitstream write_bitstream_post synth_blackbox_stub testbench board single_language hw_handoff synthesis_post opt_design_post power_opt_design_post place_design_post phys_opt_design_post route_design_post c_source converted_rtl structural hls ipsharedlogic ipstatic iptraffic ipir ipchannel ipconstraint ipgraph implementation} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_16.hex]
+set_property USED_IN {synthesis simulation out_of_context opt_design power_opt_design place_design phys_opt_design route_design write_bitstream write_bitstream_post synth_blackbox_stub testbench board single_language hw_handoff synthesis_post opt_design_post power_opt_design_post place_design_post phys_opt_design_post route_design_post c_source converted_rtl structural hls ipsharedlogic ipstatic iptraffic ipir ipchannel ipconstraint ipgraph implementation} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_32.hex]
+set_property USED_IN {synthesis simulation out_of_context opt_design power_opt_design place_design phys_opt_design route_design write_bitstream write_bitstream_post synth_blackbox_stub testbench board single_language hw_handoff synthesis_post opt_design_post power_opt_design_post place_design_post phys_opt_design_post route_design_post c_source converted_rtl structural hls ipsharedlogic ipstatic iptraffic ipir ipchannel ipconstraint ipgraph implementation} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_64.hex]
+set_property USED_IN {synthesis simulation out_of_context opt_design power_opt_design place_design phys_opt_design route_design write_bitstream write_bitstream_post synth_blackbox_stub testbench board single_language hw_handoff synthesis_post opt_design_post power_opt_design_post place_design_post phys_opt_design_post route_design_post c_source converted_rtl structural hls ipsharedlogic ipstatic iptraffic ipir ipchannel ipconstraint ipgraph implementation} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_128.hex]
+set_property USED_IN {synthesis simulation out_of_context opt_design power_opt_design place_design phys_opt_design route_design write_bitstream write_bitstream_post synth_blackbox_stub testbench board single_language hw_handoff synthesis_post opt_design_post power_opt_design_post place_design_post phys_opt_design_post route_design_post c_source converted_rtl structural hls ipsharedlogic ipstatic iptraffic ipir ipchannel ipconstraint ipgraph implementation} [get_files C:/Users/rehaa/Downloads/fft_inverse/icmem_256.hex]
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 14
+wait_on_run impl_1
+open_hw
+connect_hw_server
+open_hw_target
+set_property PROGRAM.FILE {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.runs/impl_1/top.bit} [get_hw_devices xc7a35t_0]
+current_hw_device [get_hw_devices xc7a35t_0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7a35t_0] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7a35t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a35t_0]
+set_property PROGRAM.FILE {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.runs/impl_1/top.bit} [get_hw_devices xc7a35t_0]
+program_hw_devices [get_hw_devices xc7a35t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a35t_0] 0]
+close_hw
+reset_run impl_1 -prev_step 
+launch_runs impl_1 -to_step write_bitstream -jobs 14
+wait_on_run impl_1
+open_hw
+connect_hw_server
+open_hw_target
+set_property PROGRAM.FILE {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.runs/impl_1/top.bit} [get_hw_devices xc7a35t_0]
+current_hw_device [get_hw_devices xc7a35t_0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7a35t_0] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7a35t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a35t_0]
+set_property PROGRAM.FILE {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.runs/impl_1/top.bit} [get_hw_devices xc7a35t_0]
+program_hw_devices [get_hw_devices xc7a35t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a35t_0] 0]
+close_hw
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 14
+wait_on_run impl_1
+reset_run impl_1
+launch_runs impl_1 -to_step write_bitstream -jobs 14
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 14
+wait_on_run impl_1
+open_hw
+connect_hw_server
+open_hw_target
+set_property PROGRAM.FILE {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.runs/impl_1/top.bit} [get_hw_devices xc7a35t_0]
+current_hw_device [get_hw_devices xc7a35t_0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7a35t_0] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7a35t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a35t_0]
+set_property PROGRAM.FILE {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/ifdp_project.runs/impl_1/top.bit} [get_hw_devices xc7a35t_0]
+program_hw_devices [get_hw_devices xc7a35t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a35t_0] 0]
+archive_project C:/Users/rehaa/Downloads/ifdp_project_somewhat_working.xpr.zip -temp_dir {C:/Users/rehaa/OneDrive/Documents/NUS/Semester 3/EE2026/Project/ifdp_project/.Xil/Vivado-34444-RehaanHPVictus} -force -include_local_ip_cache -include_config_settings
