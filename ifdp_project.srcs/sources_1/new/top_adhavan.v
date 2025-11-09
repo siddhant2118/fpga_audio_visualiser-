@@ -138,8 +138,7 @@ wire        fft_input_tready;
 assign fft_output_re = fft_output_tdata[15:0];
 assign fft_output_im = fft_output_tdata[31:16];
 
-// UNCOMMENT AND CONNECT AFTER ADDING FFT IP TO PROJECT:
-/*
+// FFT IP instantiation - ACTIVE
 xfft_0 forward_fft (
     .aclk                   (clk),
     .aresetn                (~reset),
@@ -159,14 +158,6 @@ xfft_0 forward_fft (
     .event_tlast_missing    (),
     .event_data_in_channel_halt ()
 );
-*/
-
-// TEMPORARY: Simulate FFT IP behavior for compilation (REMOVE AFTER ADDING IP)
-assign fft_input_tready  = 1'b1;  // Always ready
-assign fft_output_tdata  = {fft_input_im, fft_input_re};  // Pass-through
-assign fft_output_valid  = fft_input_valid;
-assign fft_output_last   = fft_input_last;
-assign fft_output_ready  = 1'b1;
 
 // ============================================================================
 // Vivado FFT IP Core Instantiation (INVERSE FFT)
@@ -178,8 +169,7 @@ wire        ifft_input_tready;
 assign ifft_output_re = ifft_output_tdata[15:0];
 assign ifft_output_im = ifft_output_tdata[31:16];
 
-// UNCOMMENT AND CONNECT AFTER ADDING IFFT IP TO PROJECT:
-/*
+// IFFT IP instantiation - ACTIVE
 xfft_1 inverse_fft (
     .aclk                   (clk),
     .aresetn                (~reset),
@@ -199,14 +189,6 @@ xfft_1 inverse_fft (
     .event_tlast_missing    (),
     .event_data_in_channel_halt ()
 );
-*/
-
-// TEMPORARY: Simulate IFFT IP behavior for compilation (REMOVE AFTER ADDING IP)
-assign ifft_input_tready  = 1'b1;  // Always ready
-assign ifft_output_tdata  = {ifft_input_im, ifft_input_re};  // Pass-through
-assign ifft_output_valid  = ifft_input_valid;
-assign ifft_output_last   = ifft_input_last;
-assign ifft_output_ready  = 1'b1;
 
 // ============================================================================
 // Main State Machine
