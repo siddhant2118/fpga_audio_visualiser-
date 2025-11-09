@@ -33,10 +33,14 @@ module display_controller(
             wave_sample[i] = wave_buffered[i*16 +:16];
     end
 
-    wire [7:0] band_idx = x_a / 6 * 16;
+    // Better band indexing: map 96 pixels to 16 bands (each band = 6 pixels wide)
+    // Each band gets 16 FFT bins (256 bins / 16 bands = 16 bins/band)
+    wire [3:0] band_num = x_a / 6;  // 0-15 (16 bands)
+    wire [7:0] band_idx = {band_num, 4'b0000};  // band_num * 16
     wire [5:0] height   = fft_mag[band_idx] >> 10;
-    
-    wire [7:0] samp_idx = (x_b * 256) / 96;
+
+    // Better waveform indexing: map 96 pixels to 256 samples
+    wire [7:0] samp_idx = (x_b << 8) / 96;  // (x_b * 256) / 96
     wire [5:0] samp_y  = (wave_sample[samp_idx] * 63) >> 16;
 
 

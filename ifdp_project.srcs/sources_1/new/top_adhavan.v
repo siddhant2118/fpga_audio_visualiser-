@@ -141,6 +141,16 @@ end
     wire signed [15:0] filt_im = filt_band_enable ? fft_im : 16'sd0;
 
   // ----------------------------
+    // Bit-reversal function for FFT output reordering
+    // ----------------------------
+    function [7:0] bit_reverse_8;
+        input [7:0] in;
+        begin
+            bit_reverse_8 = {in[0], in[1], in[2], in[3], in[4], in[5], in[6], in[7]};
+        end
+    endfunction
+
+    // ----------------------------
     // FFT Output Collection and Storage
     // ----------------------------
     reg [7:0] fft_out_idx = 0;
@@ -151,7 +161,7 @@ end
     reg [7:0] fft_output_idx = 0;
     reg fft_outputting = 0;
     reg filtering_complete = 0;
-    
+
     always @(posedge clk) begin
         if (reset) begin
             fft_out_idx <= 0;
@@ -168,11 +178,12 @@ end
                 fft_output_ready <= 0;
                 filtering_complete <= 0;
             end else if (fft_collecting) begin
-                // Collect FFT outputs (one per cycle after sync)
-                fft_magnitude_buffer[fft_out_idx] <= fft_mag_approx;
-                filtered_fft_buffer[fft_out_idx] <= {filt_re, filt_im};
+                // Collect FFT outputs with bit-reversal to get natural order
+                // FFT outputs in bit-reversed order, so reverse the index
+                fft_magnitude_buffer[bit_reverse_8(fft_out_idx)] <= fft_mag_approx;
+                filtered_fft_buffer[bit_reverse_8(fft_out_idx)] <= {filt_re, filt_im};
                 fft_out_idx <= fft_out_idx + 1;
-                
+
                 if (fft_out_idx == 8'd255) begin
                     fft_collecting <= 0;
                     fft_output_ready <= 1;
@@ -181,7 +192,7 @@ end
                     filtering_complete <= 1;
                 end
             end else if (fft_outputting) begin
-                // Output FFT magnitudes sequentially
+                // Output FFT magnitudes sequentially (now in natural order)
                 fft_data <= fft_magnitude_buffer[fft_output_idx];
                 fft_data_valid <= 1;
                 fft_output_idx <= fft_output_idx + 1;
@@ -206,8 +217,9 @@ end
     reg [7:0] ifft_in_idx = 0;
     reg ifft_feeding = 0;
     reg ifft_ce = 0;
-    wire [31:0] ifft_in_sample = filtered_fft_buffer[ifft_in_idx];
-    
+    // IFFT needs bit-reversed input, so reverse the index back
+    wire [31:0] ifft_in_sample = filtered_fft_buffer[bit_reverse_8(ifft_in_idx)];
+
     // Feed IFFT after filtering is complete
     always @(posedge clk) begin
         if (reset) begin
@@ -268,8 +280,8 @@ end
                 ifft_out_idx <= 0;
                 waveform_ready <= 0;
             end else if (ifft_collecting) begin
-                // Collect IFFT outputs (one per cycle after sync)
-                waveform_buffer[ifft_out_idx] <= ifft_out_sample[31:16];  // Real part
+                // Collect IFFT outputs with bit-reversal to get natural order
+                waveform_buffer[bit_reverse_8(ifft_out_idx)] <= ifft_out_sample[31:16];  // Real part
                 ifft_out_idx <= ifft_out_idx + 1;
                 if (ifft_out_idx == 8'd255) begin
                     ifft_collecting <= 0;
@@ -278,7 +290,7 @@ end
                     waveform_outputting <= 1;
                 end
             end else if (waveform_outputting) begin
-                // Output waveform samples sequentially
+                // Output waveform samples sequentially (now in natural order)
                 wave_data <= waveform_buffer[waveform_output_idx];
                 wave_data_valid <= 1;
                 waveform_output_idx <= waveform_output_idx + 1;

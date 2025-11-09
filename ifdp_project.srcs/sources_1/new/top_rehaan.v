@@ -1,10 +1,12 @@
 `timescale 1ns/1ps
 module top_rehaan(
-    input  wire clk,       
+    input  wire clk,
     input wire [15:0] sw,
-    
+
     input wire [15:0] fft_data,
+    input wire fft_data_valid,       // NEW: valid signal for FFT data
     input wire [15:0] wave_data,
+    input wire wave_data_valid,      // NEW: valid signal for waveform data
 
     output wire cs_a,
     output wire sdin_a,
@@ -26,8 +28,8 @@ module top_rehaan(
     wire [16*256-1:0] fft_flat;
     wire [16*256-1:0] wave_flat;
 
-    data_reader fft_reader(clk, fft_data, fft_flat);
-    data_reader wave_reader(clk, wave_data, wave_flat);
+    data_reader fft_reader(clk, fft_data, fft_data_valid, fft_flat);
+    data_reader wave_reader(clk, wave_data, wave_data_valid, wave_flat);
 
     wire clk6p25mhz;
     clock_div clk1(clk, 7, clk6p25mhz);
