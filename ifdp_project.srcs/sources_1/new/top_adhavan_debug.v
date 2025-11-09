@@ -53,6 +53,12 @@ reg [8:0] counter = 0;  // 9 bits for counting up to 256+
 reg [15:0] sample_buffer [0:255];
 
 // ============================================================================
+// Temporary Variables for Calculations
+// ============================================================================
+reg signed [15:0] sample_signed;
+reg [15:0] abs_val;
+
+// ============================================================================
 // Main State Machine
 // ============================================================================
 always @(posedge clk) begin
@@ -108,8 +114,8 @@ always @(posedge clk) begin
             // Output "FFT magnitude" - just absolute value of samples
             OUTPUT_FFT_MAG: begin
                 // Create fake FFT magnitude from sample absolute value
-                wire signed [15:0] sample_signed = sample_buffer[counter];
-                wire [15:0] abs_val = sample_signed[15] ? (~sample_signed + 1) : sample_signed;
+                sample_signed = sample_buffer[counter];
+                abs_val = sample_signed[15] ? (~sample_signed + 1) : sample_signed;
                 
                 fft_data       <= abs_val >> 4;  // Scale down for display
                 fft_data_valid <= 1'b1;
