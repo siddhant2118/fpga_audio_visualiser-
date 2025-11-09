@@ -410,9 +410,9 @@ always @(posedge clk) begin
                     // Store real part (ignore imaginary, should be ~0)
                     // CRITICAL FIX: IFFT with unscaled mode outputs N times larger
                     // For 256-point FFT: divide by 256 (>>> 8) is mathematically correct
-                    // But try >>> 4 (÷16) for better visibility
+                    // >>> 4 still not visible enough, try >>> 2 (÷4) for much more visible waveform
                     ifft_real_signed = ifft_output_re;
-                    scaled_ifft_output = ifft_real_signed >>> 4;  // Less aggressive scaling
+                    scaled_ifft_output = ifft_real_signed >>> 2;  // Minimal scaling for visibility
                     
                     ifft_output_buffer[counter] <= scaled_ifft_output;
 
@@ -428,8 +428,8 @@ always @(posedge clk) begin
                     if (timeout_counter > 5000) begin
                         // IFFT IP not working - show original captured audio (no filtering)
                         // Input samples are 12-bit sign-extended to 16-bit
-                        // Scale up by 4x (<<2) for better visibility
-                        ifft_output_buffer[counter] <= sample_buffer[counter] << 4;
+                        // Scale up by 64x (<<6) to match new IFFT scaling
+                        ifft_output_buffer[counter] <= sample_buffer[counter] << 6;
                         
                         if (counter == 255) begin
                             state   <= OUTPUT_WAVEFORM;

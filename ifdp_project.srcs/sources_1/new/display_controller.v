@@ -38,10 +38,10 @@ module display_controller(
     wire [3:0] band_num = x_a / 6;  // 0-15 (16 bands)
     wire [7:0] band_idx = {band_num, 4'b0000};  // band_num * 16
     
-    // FIX: More aggressive scaling for FFT magnitude
-    // Original: >> 10 (divide by 1024) - might be too much scaling
-    // Try: >> 8 (divide by 256) for more visible bars
-    wire [4:0] height = fft_mag[band_idx] >> 9;  // Scale to 0-63
+    // FIX: More aggressive scaling for noisy/oscillating FFT bars
+    // >> 9 was too sensitive, causing bars to max out and oscillate
+    // >> 11 (divide by 2048) gives more stable, proportional bars
+    wire [5:0] height = fft_mag[band_idx] >> 11;  // Scale to 0-63
 
     // Better waveform indexing: map 96 pixels to 256 samples
     wire [7:0] samp_idx = (x_b << 8) / 96;  // (x_b * 256) / 96

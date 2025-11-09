@@ -35,6 +35,42 @@ module top_sidu(
     );
     assign J_MIC3_Pin4 = sclk;
 
+    // ========================================================================
+    // NOISE FILTERING for microphone
+    // ========================================================================
+    // 1. DC offset removal: MIC3 centers around ~2048, remove this offset
+    // 2. Noise gate: Suppress small signals below threshold (20 ADC units)
+    // 3. Simple averaging: 4-sample moving average for smoothing
+    // ========================================================================
+    
+    parameter DC_OFFSET = 12'd2048;     // Typical MIC3 DC offset
+    parameter NOISE_THRESHOLD = 12'd20; // Ignore signals below this magnitude
+    
+    // DC offset removal
+    wire signed [12:0] mic_centered = {1'b0, mic_in} - {1'b0, DC_OFFSET};  // 13-bit signed
+    wire signed [11:0] mic_offset_removed = mic_centered[11:0];  // Back to 12-bit
+    
+    // Noise gate: zero out small signals
+    wire [11:0] mic_abs = mic_offset_removed[11] ? (~mic_offset_removed + 1) : mic_offset_removed;
+    wire [11:0] mic_gated = (mic_abs < NOISE_THRESHOLD) ? 12'd0 : mic_offset_removed;
+    
+    // Simple 4-sample moving average filter for smoothing
+    reg [11:0] mic_history [0:3];
+    reg [1:0] hist_idx = 0;
+    reg signed [13:0] mic_sum = 0;  // Sum of 4 samples (needs 14 bits)
+    wire [11:0] mic_filtered = mic_sum[13:2];  // Average (divide by 4)
+    
+    always @(posedge clk) begin
+        if (sample_valid) begin
+            // Update circular buffer
+            mic_history[hist_idx] <= mic_gated;
+            hist_idx <= hist_idx + 1;
+            
+            // Recalculate sum (simple but works)
+            mic_sum <= mic_history[0] + mic_history[1] + mic_history[2] + mic_history[3];
+        end
+    end
+
     // Make a 1-cycle valid pulse on each new sample (rising edge of cs)
     reg cs_q = 1'b1;
     always @(posedge clk) cs_q <= cs;
@@ -88,7 +124,7 @@ module top_sidu(
     frame_packer #(.N_SAMPLES(256)) u_pack (
         .clk(clk),
         .s_valid(sample_valid),   // 1 pulse per new sample
-        .s_data(mic_in),          // 12-bit sample
+        .s_data(mic_filtered),    // CHANGED: Use filtered microphone data
         .wr_en(wr_en_w),
         .wr_addr(wr_addr_w),
         .wr_data(wr_data_w),
