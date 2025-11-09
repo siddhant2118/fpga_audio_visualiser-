@@ -116,6 +116,15 @@ wire        ifft_output_ready;
 reg [15:0] ifft_output_buffer [0:255];  // Time-domain waveform
 
 // ============================================================================
+// Helper signals for magnitude calculation and filtering
+// ============================================================================
+reg signed [15:0] re_signed, im_signed;
+reg [15:0] re_abs, im_abs, magnitude;
+reg [3:0] band_num;
+reg band_enabled;
+reg [15:0] filtered_re, filtered_im;
+
+// ============================================================================
 // Vivado FFT IP Core Instantiation (FORWARD FFT)
 // ============================================================================
 // NOTE: Replace this with actual IP instantiation template from Vivado
@@ -275,11 +284,11 @@ always @(posedge clk) begin
             COLLECT_FFT: begin
                 if (fft_output_valid) begin
                     // Calculate magnitude using L1 norm: |Re| + |Im|
-                    wire signed [15:0] re_signed = fft_output_re;
-                    wire signed [15:0] im_signed = fft_output_im;
-                    wire [15:0] re_abs = re_signed[15] ? (~re_signed + 1) : re_signed;
-                    wire [15:0] im_abs = im_signed[15] ? (~im_signed + 1) : im_signed;
-                    wire [15:0] magnitude = re_abs + im_abs;
+                    re_signed = fft_output_re;
+                    im_signed = fft_output_im;
+                    re_abs = re_signed[15] ? (~re_signed + 1) : re_signed;
+                    im_abs = im_signed[15] ? (~im_signed + 1) : im_signed;
+                    magnitude = re_abs + im_abs;
 
                     // Store magnitude and complex data
                     fft_mag_buffer[counter]     <= magnitude;
@@ -319,12 +328,12 @@ always @(posedge clk) begin
             FEED_IFFT: begin
                 if (ifft_input_tready) begin
                     // Determine which frequency band this bin belongs to
-                    wire [3:0] band_num = counter[7:4];  // counter / 16
-                    wire       band_enabled = sw[band_num];
+                    band_num = counter[7:4];  // counter / 16
+                    band_enabled = sw[band_num];
 
                     // Apply filtering: zero out if band is disabled
-                    wire [15:0] filtered_re = band_enabled ? fft_complex_buffer[counter][15:0]  : 16'd0;
-                    wire [15:0] filtered_im = band_enabled ? fft_complex_buffer[counter][31:16] : 16'd0;
+                    filtered_re = band_enabled ? fft_complex_buffer[counter][15:0]  : 16'd0;
+                    filtered_im = band_enabled ? fft_complex_buffer[counter][31:16] : 16'd0;
 
                     ifft_input_re    <= filtered_re;
                     ifft_input_im    <= filtered_im;
