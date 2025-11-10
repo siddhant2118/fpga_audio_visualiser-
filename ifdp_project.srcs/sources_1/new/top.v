@@ -26,6 +26,7 @@ module top(
                       JB[0], JB[1], JB[3], JB[4], JB[5], JB[6], JB[7]);
 
     // Use wave_data_valid as wr_valid for audio output
+    // Increased FIFO depth to 11 (2048 samples) for better buffering of bursty IFFT output
     top_manu manu(clk, 1, wave_data_valid, wave_data, 1, 0, JC[0], JC[3], JC[1], JC[2]);
 
     top_sidu sidu(clk, J_MIC3_Pin3, J_MIC3_Pin1, J_MIC3_Pin4, led, an, seg, dp, m2_rd_addr, m2_rd_data, frame_done);

@@ -447,19 +447,26 @@ always @(posedge clk) begin
             // ================================================================
             // OUTPUT_WAVEFORM: Stream filtered waveform to display (Member 3)
             // Shows IFFT output (filtered time-domain signal)
-            // Takes 256 cycles, then return to IDLE
+            // Paced output: send samples every ~5000 clocks (20 kHz rate)
+            // This matches the DAC consumption rate better than bursting all samples
             // ================================================================
             OUTPUT_WAVEFORM: begin
-                // Output IFFT reconstructed waveform (filtered audio)
-                wave_data       <= ifft_output_buffer[counter];
-                wave_data_valid <= 1'b1;
-
-                if (counter == 255) begin
-                    state   <= IDLE;
-                    counter <= 0;
+                // Throttle output to approximately match audio sample rate
+                // At 100 MHz, dividing by 5000 gives 20 kHz
+                if (timeout_counter >= 5000) begin
+                    wave_data       <= ifft_output_buffer[counter];
+                    wave_data_valid <= 1'b1;
                     timeout_counter <= 0;
+                    
+                    if (counter == 255) begin
+                        state   <= IDLE;
+                        counter <= 0;
+                    end else begin
+                        counter <= counter + 1;
+                    end
                 end else begin
-                    counter <= counter + 1;
+                    wave_data_valid <= 1'b0;  // No valid data this cycle
+                    timeout_counter <= timeout_counter + 1;
                 end
             end
 
