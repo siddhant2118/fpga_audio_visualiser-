@@ -10,7 +10,8 @@ module frame_packer #(
     output reg         wr_en = 1'b0,
     output reg  [7:0]  wr_addr = 8'd0,
     output reg  [11:0] wr_data = 12'd0,
-    output reg         frame_done = 1'b0  
+    output reg         frame_done = 1'b0
+);
     always @(posedge clk) begin
         wr_en      <= 1'b0;
         frame_done <= 1'b0;
