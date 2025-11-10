@@ -1,38 +1,20 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 08.11.2025 21:55:06
-// Design Name: 
-// Module Name: adsdad
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
 
 
-// seg_scan4.v - scan right?left; leftmost stays blank via d3=4'hF
+
+
 module seg_scan4(
-    input  wire        clk,        // 100 MHz
-    input  wire [3:0]  d3,         // leftmost
+    input  wire        clk,        
+    input  wire [3:0]  d3,         
     input  wire [3:0]  d2,
     input  wire [3:0]  d1,
-    input  wire [3:0]  d0,         // rightmost
-    input  wire [3:0]  dp_mask,    // 1=off, 0=on per digit, active low output
-    output reg  [3:0]  an,         // active low
-    output reg  [6:0]  seg,        // active low
-    output reg         dp          // active low
+    input  wire [3:0]  d0,         
+    input  wire [3:0]  dp_mask,    
+    output reg  [3:0]  an,         
+    output reg  [6:0]  seg,        
+    output reg         dp          
 );
-    localparam integer DIV = 100_000_000 / 4000; // ~1 kHz per digit
+    localparam integer DIV = 100_000_000 / 4000; 
     reg [$clog2(DIV)-1:0] ctr = 0;
     reg [1:0] idx = 0;
 
