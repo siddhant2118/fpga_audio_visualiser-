@@ -1,16 +1,15 @@
 `timescale 1ns / 1ps
 
-
 module frame_packer #(
     parameter integer N_SAMPLES = 256
 )(
     input  wire        clk,
     input  wire        s_valid,           
-    input  wire [11:0] s_data,            
+    input  wire [11:0] s_data,           
     output reg         wr_en = 1'b0,
     output reg  [7:0]  wr_addr = 8'd0,
     output reg  [11:0] wr_data = 12'd0,
-    output reg         frame_done = 1'b0
+    output reg         frame_done = 1'b0  
 );
     always @(posedge clk) begin
         wr_en      <= 1'b0;

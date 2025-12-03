@@ -1,12 +1,8 @@
 `timescale 1ns / 1ps
 
-
-
-
-
 module seven_segment(
     input wire [3:0] val,
-    output reg [6:0] seg  // a..g, active low
+    output reg [6:0] seg  
 );
     always @* begin
         case (val)
@@ -20,7 +16,7 @@ module seven_segment(
             4'h7: seg = 7'b1111000;
             4'h8: seg = 7'b0000000;
             4'h9: seg = 7'b0010000;
-            4'hF: seg = 7'b1111111; // BLANK
+            4'hF: seg = 7'b1111111; 
             default: seg = 7'b1111111;
         endcase
     end

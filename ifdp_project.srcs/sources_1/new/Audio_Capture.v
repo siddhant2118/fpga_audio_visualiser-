@@ -1,11 +1,11 @@
 `timescale 1ns / 1ps
-// Audio_Capture.v  
+
 module Audio_Capture(
     input wire CLK,               
     input  wire cs,                
-    input wire MISO,              
-    output wire clk_samp,          
-    output reg sclk,          
+    input wire MISO,              // JB3
+    output wire clk_samp,          // JB1
+    output reg sclk,          // JB4
     output reg [11:0] sample  
 );
     reg [11:0] count2 = 0;

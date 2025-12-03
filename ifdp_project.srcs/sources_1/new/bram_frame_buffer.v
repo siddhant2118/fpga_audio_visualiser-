@@ -1,7 +1,5 @@
 `timescale 1ns / 1ps
 
-`timescale 1ns / 1ps
-
 module bram_frame_buffer #(
     parameter integer N_SAMPLES = 256
 )(

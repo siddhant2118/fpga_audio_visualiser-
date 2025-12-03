@@ -13,7 +13,7 @@ module slow_clock10Hz(
         
         if ({4'b0, mic_in} > cur_max) cur_max <= {4'b0, mic_in};
 
-        // every 0.1 s, publish and reset
+        
         if (ctr == WINDOW-1) begin
             ctr      <= 24'd0;
             maxvalue <= cur_max;

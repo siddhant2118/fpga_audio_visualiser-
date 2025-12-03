@@ -11,7 +11,7 @@ module switch_manager(input wire clk,
     always @ (*) begin
         for (i = 0; i < 256; i = i + 1) begin
             target[i] = fft_flat[i*16 +:16];
-            if (sw[15 - (i / 16)]) begin
+            if (~sw[15 - (i / 16)]) begin
                 target[i] = target[i] >> 3;
             end
         end

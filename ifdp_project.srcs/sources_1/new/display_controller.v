@@ -33,38 +33,33 @@ module display_controller(
             wave_sample[i] = wave_buffered[i*16 +:16];
     end
 
-    // Better band indexing: map 96 pixels to 16 bands (each band = 6 pixels wide)
-    // Each band gets 16 FFT bins (256 bins / 16 bands = 16 bins/band)
-    wire [3:0] band_num = x_a / 6;  // 0-15 (16 bands)
-    wire [7:0] band_idx = {band_num, 4'b0000};  // band_num * 16
+   
+    wire [3:0] band_num = x_a / 6;  
+    wire [7:0] band_idx = {band_num, 4'b0000}; 
     
-    // FIX: More aggressive scaling for noisy/oscillating FFT bars
-    // >> 9 was too sensitive, causing bars to max out and oscillate
-    // >> 11 (divide by 2048) gives more stable, proportional bars
-    wire [5:0] height = fft_mag[band_idx] >> 11;  // Scale to 0-63
+   
+    wire [8:0] height = fft_mag[band_idx] >> 8; 
 
-    // Better waveform indexing: map 96 pixels to 256 samples
-    wire [7:0] samp_idx_curr = (x_b << 8) / 96;  // Current sample index
-    wire [7:0] samp_idx_next = ((x_b + 7'd1) << 8) / 96;  // Next column's sample index
+   
+    wire [7:0] samp_idx_curr = (x_b << 8) / 96; 
+    wire [7:0] samp_idx_next = ((x_b + 7'd1) << 8) / 96;  
     
-    // Get current and next sample values
+    
     wire signed [15:0] wave_curr_signed = wave_sample[samp_idx_curr];
     wire signed [15:0] wave_next_signed = (x_b < 95) ? wave_sample[samp_idx_next] : wave_curr_signed;
     
-    // Convert both to unsigned and scale to 0-63 pixel range
+    
     wire [16:0] wave_curr_unsigned = wave_curr_signed + 17'd32768;
     wire [16:0] wave_next_unsigned = wave_next_signed + 17'd32768;
-    wire [5:0] samp_y_curr = wave_curr_unsigned[16:10];  // 0-63
-    wire [5:0] samp_y_next = wave_next_unsigned[16:10];  // 0-63
+    wire [5:0] samp_y_curr = wave_curr_unsigned[16:10];  
+    wire [5:0] samp_y_next = wave_next_unsigned[16:10]; 
     
-    // Calculate line drawing between current and next sample
-    // If samples are on same row, draw that row
-    // If samples span multiple rows, draw all rows in between (vertical line segment)
+   
     wire [5:0] y_min = (samp_y_curr < samp_y_next) ? samp_y_curr : samp_y_next;
     wire [5:0] y_max = (samp_y_curr > samp_y_next) ? samp_y_curr : samp_y_next;
     
-    // Check if current pixel y-coordinate is on the line
-    wire [5:0] y_b_inverted = 6'd63 - y_b;  // Invert y for comparison
+    
+    wire [5:0] y_b_inverted = 6'd63 - y_b;  
     wire on_waveform_line = (y_b_inverted >= y_min) && (y_b_inverted <= y_max);
 
 
@@ -80,7 +75,7 @@ module display_controller(
         end else
             colorA = 16'h0000;    // background black
 
-        // Draw smooth waveform line (connects adjacent samples)
+        
         if (on_waveform_line)
             colorB = 16'h0695;    // turquoise trace
         else
