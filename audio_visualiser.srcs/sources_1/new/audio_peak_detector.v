@@ -1,0 +1,29 @@
+`timescale 1ns / 1ps
+//
+// Audio Peak Detector
+// Tracks peak audio level over 0.1s windows for LED/7-seg display
+//
+
+module audio_peak_detector(
+    input  wire        CLK,
+    input  wire [11:0] mic_in,
+    output reg  [15:0] maxvalue
+);
+localparam integer WINDOW = 10_000_000;
+reg [23:0] ctr = 24'd0;
+    reg [15:0] cur_max = 16'd0;
+
+    always @(posedge CLK) begin
+        
+        if ({4'b0, mic_in} > cur_max) cur_max <= {4'b0, mic_in};
+
+        
+        if (ctr == WINDOW-1) begin
+            ctr      <= 24'd0;
+            maxvalue <= cur_max;
+            cur_max  <= 16'd0;
+        end else begin
+            ctr <= ctr + 1'b1;
+        end
+    end
+endmodule

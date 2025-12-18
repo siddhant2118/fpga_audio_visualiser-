@@ -1,0 +1,4 @@
+NumberHits:0
+Timestamp: Thu Dec 18 12:16:38 UTC 2025
+VLNV: xilinx.com:ip:xfft:9.1
+SynthRuntime: 185
