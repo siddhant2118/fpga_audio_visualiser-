@@ -64,8 +64,8 @@ This project implements a **real-time audio spectrum analyzer** on a Xilinx Arti
 | **FPGA Board** | Digilent Basys3 (Artix-7 XC7A35T) | Main processing unit |
 | **Microphone** | Digilent PmodMIC3 (ADCS7476) | 12-bit audio capture, 20 kHz |
 | **Audio Output** | Digilent PmodDA2 (DAC121S101) | Dual 12-bit DAC, stereo output |
-| **Display #1** | Digilent PmodOLEDrgb | 96×64 RGB OLED (spectrum bars) |
-| **Display #2** | Digilent PmodOLEDrgb | 96×64 RGB OLED (waveform) |
+| **Display #1** | Digilent Pmod OLEDrgb | 96×64 RGB OLED (spectrum bars) |
+| **Display #2** | Digilent Pmod OLEDrgb | 96×64 RGB OLED (waveform) |
 
 ### 📍 Pin Assignments
 
