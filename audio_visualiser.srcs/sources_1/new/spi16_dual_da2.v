@@ -12,7 +12,7 @@ module spi16_dual_da2 (
     input  wire        load,
     input  wire [15:0] frame_a,
     input  wire [15:0] frame_b,
-    output reg         busy,
+    output reg         busyread,
     output reg         sync_n,
     input  wire        sclk_enable,
     input wire        sclk,
@@ -25,7 +25,7 @@ module spi16_dual_da2 (
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            busy   <= 1'b0;
+            busyread   <= 1'b0;
             sync_n <= 1'b1;
             dina   <= 1'b0;
             dinb   <= 1'b0;
@@ -33,8 +33,8 @@ module spi16_dual_da2 (
             sh_b   <= 16'd0;
             bit_cnt<= 5'd0;
         end else begin
-            if (!busy && load) begin
-                busy    <= 1'b1;
+            if (!busyread && load) begin
+                busyread    <= 1'b1;
                 sync_n  <= 1'b0;
                 sh_a    <= frame_a;
                 sh_b    <= frame_b;
@@ -42,13 +42,13 @@ module spi16_dual_da2 (
                 dina    <= frame_a[15];
                 dinb    <= frame_b[15];
             end
-            if (busy && sclk_enable) begin
+            if (busyread && sclk_enable) begin
                 if (sclk) begin
                     if (bit_cnt == 5'd15) begin
                         sh_a <= {sh_a[14:0], 1'b0};
                         sh_b <= {sh_b[14:0], 1'b0};
                         bit_cnt <= bit_cnt + 5'd1;
-                        busy   <= 1'b0;
+                        busyread   <= 1'b0;
                         sync_n <= 1'b1;
                     end else begin
                         sh_a <= {sh_a[14:0], 1'b0};
