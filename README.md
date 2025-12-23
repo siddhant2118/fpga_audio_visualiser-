@@ -326,9 +326,9 @@ This project was developed as part of **EE2026 Digital Design** coursework at th
 
 **Team Members:**
 - Siddhant Singh (@siddhant2118)
-- Adhavan
-- Rehaan
-- Manu
+- Adhavan (@airboy99)
+- Rehaan (@RehaanMahmood)
+- Manu (@manudagur87)
 
 ---
 
